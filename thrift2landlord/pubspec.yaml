@@ -42,11 +42,14 @@ dependencies:
   intl: ^0.17.0  # For date formatting
   shared_preferences: ^2.2.0  # For local storage
   image_picker: ^1.0.7  # For picking images in chat
-  file_picker: ^6.1.1  # For picking documents
+  # file_picker: ^6.1.1  # For picking documents
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  flutter_screenutil: ^5.9.3
+  dio: ^5.8.0+1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

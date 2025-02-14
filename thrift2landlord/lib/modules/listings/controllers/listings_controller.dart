@@ -12,7 +12,7 @@ class ListingsController extends GetxController {
 
   void loadProperties() async {
     isLoading.value = true;
-    // properties.value = await HomeService.fetchProperties();
+    // properties.value = await ListingsService.fetchProperties();
     isLoading.value = false;
   }
 }

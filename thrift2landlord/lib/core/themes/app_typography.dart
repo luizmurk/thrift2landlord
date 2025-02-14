@@ -8,67 +8,74 @@ class AppTypography {
 
   static final TextTheme lightTextTheme = TextTheme(
     headlineLarge: TextStyle(
-        fontSize: AppSizes.headline1,
+        fontSize: AppSizes.headlineLarge,
         fontWeight: FontWeight.bold,
-        color: AppColors.textLight),
+        color: AppColors.dark),
     headlineMedium: TextStyle(
-        fontSize: AppSizes.headline1,
+        fontSize: AppSizes.headlineMedium,
         fontWeight: FontWeight.w600,
-        color: AppColors.textLight),
+        color: AppColors.dark),
     headlineSmall: TextStyle(
-        fontSize: AppSizes.headline1,
+        fontSize: AppSizes.headlineSmall,
         fontWeight: FontWeight.w600,
-        color: AppColors.textLight),
-    titleLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
+        color: AppColors.dark),
+    titleLarge: TextStyle(fontSize: AppSizes.titleLarge, color: AppColors.dark),
     titleMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    titleSmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    labelLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
+        TextStyle(fontSize: AppSizes.titleMedium, color: AppColors.dark),
+    titleSmall: TextStyle(fontSize: AppSizes.titleSmall, color: AppColors.dark),
+    labelLarge: TextStyle(fontSize: AppSizes.labelLarge, color: AppColors.dark),
     labelMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    labelSmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    bodyLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    bodyMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
-    bodySmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textLight),
+        TextStyle(fontSize: AppSizes.labelMedium, color: AppColors.dark),
+    labelSmall: TextStyle(fontSize: AppSizes.labelSmall, color: AppColors.dark),
+    bodyLarge: TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.dark),
+    bodyMedium: TextStyle(fontSize: AppSizes.bodyMedium, color: AppColors.dark),
+    bodySmall: TextStyle(fontSize: AppSizes.bodySmall, color: AppColors.dark),
   );
 
   static final TextTheme darkTextTheme = TextTheme(
     headlineLarge: TextStyle(
-        fontSize: AppSizes.headline1,
+        fontSize: AppSizes.headlineLarge,
         fontWeight: FontWeight.bold,
-        color: AppColors.textDark),
+        color: AppColors.light),
     headlineMedium: TextStyle(
-        fontSize: AppSizes.headline1,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textDark),
+        fontSize: AppSizes.headlineMedium,
+        fontWeight: FontWeight.w500,
+        color: AppColors.light),
     headlineSmall: TextStyle(
-        fontSize: AppSizes.headline1,
-        fontWeight: FontWeight.w600,
-        color: AppColors.textDark),
-    titleLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    titleMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    titleSmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    labelLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    labelMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    labelSmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
-    bodyLarge:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
+        fontSize: AppSizes.headlineSmall,
+        fontWeight: FontWeight.w200,
+        color: AppColors.light),
+    titleLarge: TextStyle(
+        fontSize: AppSizes.titleLarge,
+        color: AppColors.light,
+        fontWeight: FontWeight.bold),
+    titleMedium: TextStyle(
+        fontSize: AppSizes.titleMedium,
+        color: AppColors.light,
+        fontWeight: FontWeight.w600),
+    titleSmall: TextStyle(
+        fontSize: AppSizes.titleSmall,
+        color: AppColors.light,
+        fontWeight: FontWeight.w200),
+    labelLarge: TextStyle(
+        fontSize: AppSizes.labelLarge,
+        color: AppColors.light,
+        fontWeight: FontWeight.bold),
+    labelMedium: TextStyle(
+        fontSize: AppSizes.labelMedium,
+        color: AppColors.light,
+        fontWeight: FontWeight.bold),
+    labelSmall: TextStyle(
+        fontSize: AppSizes.labelSmall,
+        color: AppColors.light,
+        fontWeight: FontWeight.bold),
+    bodyLarge: TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.light),
     bodyMedium:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
+        TextStyle(fontSize: AppSizes.bodyMedium, color: AppColors.offWhite),
     bodySmall:
-        TextStyle(fontSize: AppSizes.headline1, color: AppColors.textDark),
+        TextStyle(fontSize: AppSizes.bodySmall, color: AppColors.offWhite),
   );
 }
+
+/// how to use
+/// Text("Hello, World!", style: Theme.of(context).textTheme.headline1),

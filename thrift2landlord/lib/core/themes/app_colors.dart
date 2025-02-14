@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFF1A237E); // Deep Indigo
-  static const Color accent = Color(0xFFFFA726); // Orange Accent
-  static const Color backgroundLight = Color(0xFFF5F5F5);
-  static const Color backgroundDark = Color(0xFF121212);
-  static const Color textLight = Color(0xFF212121);
-  static const Color textDark = Color(0xFFE0E0E0);
+  // Basic Colors
+  static const Color light = Color(0xFFFFFFFF);
+  static const Color dark = Color(0xFF04061C);
+  static const Color offWhite = Color(0xFFCBC2C2);
+
+  // Apps Colors
+  static const Color primary = Color.fromARGB(255, 126, 26, 36);
 }

@@ -14,7 +14,26 @@ class AppPages {
       page: () => ListingsScreen(),
       binding: ListingsBinding(),
     ),
-
+    GetPage(
+      name: AppRoutes.signIn,
+      page: () => SignInScreen(),
+      // binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.signUp,
+      page: () => SignUpScreen(),
+      // binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: () => ForgotPasswordScreen(),
+      // binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.emailVerify,
+      page: () => EmailVerificationScreen(),
+      // binding: AuthBinding(),
+    ),
     //   GetPage(
     //   name: AppRoutes.splash,
     //   page: () => SplashScreen(),

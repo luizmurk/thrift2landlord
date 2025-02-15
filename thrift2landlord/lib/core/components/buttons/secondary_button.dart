@@ -23,7 +23,7 @@ class CustomSecondaryButton extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(vertical: AppSizes.primaryPadding * 0.8),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
+            borderRadius: BorderRadius.circular(50.r), // Fully rounded ends
           ),
           side: BorderSide(
               color: isDisabled ? AppColors.offWhite : AppColors.primary),

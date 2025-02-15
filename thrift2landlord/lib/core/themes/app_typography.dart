@@ -19,17 +19,28 @@ class AppTypography {
         fontSize: AppSizes.headlineSmall,
         fontWeight: FontWeight.w600,
         color: AppColors.dark),
-    titleLarge: TextStyle(fontSize: AppSizes.titleLarge, color: AppColors.dark),
-    titleMedium:
-        TextStyle(fontSize: AppSizes.titleMedium, color: AppColors.dark),
-    titleSmall: TextStyle(fontSize: AppSizes.titleSmall, color: AppColors.dark),
+    titleLarge: TextStyle(
+        fontSize: AppSizes.titleLarge,
+        fontWeight: FontWeight.bold,
+        color: AppColors.dark),
+    titleMedium: TextStyle(
+        fontSize: AppSizes.titleMedium,
+        fontWeight: FontWeight.w600,
+        color: AppColors.dark),
+    titleSmall: TextStyle(
+        fontSize: AppSizes.titleSmall,
+        fontWeight: FontWeight.w600,
+        color: AppColors.dark),
     labelLarge: TextStyle(fontSize: AppSizes.labelLarge, color: AppColors.dark),
     labelMedium:
         TextStyle(fontSize: AppSizes.labelMedium, color: AppColors.dark),
     labelSmall: TextStyle(fontSize: AppSizes.labelSmall, color: AppColors.dark),
-    bodyLarge: TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.dark),
-    bodyMedium: TextStyle(fontSize: AppSizes.bodyMedium, color: AppColors.dark),
-    bodySmall: TextStyle(fontSize: AppSizes.bodySmall, color: AppColors.dark),
+    bodyLarge:
+        TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.offWhite),
+    bodyMedium:
+        TextStyle(fontSize: AppSizes.bodyMedium, color: AppColors.offWhite),
+    bodySmall:
+        TextStyle(fontSize: AppSizes.bodySmall, color: AppColors.offWhite),
   );
 
   static final TextTheme darkTextTheme = TextTheme(
@@ -69,7 +80,8 @@ class AppTypography {
         fontSize: AppSizes.labelSmall,
         color: AppColors.light,
         fontWeight: FontWeight.bold),
-    bodyLarge: TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.light),
+    bodyLarge:
+        TextStyle(fontSize: AppSizes.bodyLarge, color: AppColors.offWhite),
     bodyMedium:
         TextStyle(fontSize: AppSizes.bodyMedium, color: AppColors.offWhite),
     bodySmall:

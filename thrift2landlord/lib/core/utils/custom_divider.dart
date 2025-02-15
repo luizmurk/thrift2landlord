@@ -23,7 +23,6 @@ class CustomDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: horizontalPadding.w,
         vertical: verticalSpacing.h,
       ),
       child: Divider(
@@ -44,3 +43,5 @@ class CustomDivider extends StatelessWidget {
 // CustomDivider(
 //   color: AppColors.primary, // Primary-colored divider
 // ),
+
+// CustomDivider(thickness: AppSizes.primaryDividerThickness),

@@ -21,17 +21,18 @@ class CustomPrimaryButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Material(
+        elevation: 4.0, // Add elevation for the button
         color: isDisabled ? AppColors.offWhite : AppColors.primary,
-        borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
+        borderRadius: BorderRadius.circular(50.r), // Fully rounded ends
         child: InkWell(
           onTap: isDisabled || isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
+          borderRadius: BorderRadius.circular(50.r), // Fully rounded ends
           splashColor: AppColors.light.withOpacity(0.2), // Subtle tap effect
           child: Container(
             padding:
                 EdgeInsets.symmetric(vertical: AppSizes.primaryPadding * 0.8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
+              borderRadius: BorderRadius.circular(50.r), // Fully rounded ends
               border: Border.all(
                   color: AppColors.offWhite), // Border instead of shadow
             ),
@@ -72,19 +73,3 @@ class CustomPrimaryButton extends StatelessWidget {
     );
   }
 }
-
-// CustomButton(
-//   text: "Submit",
-//   onPressed: () {
-//     print("Primary Button Clicked");
-//   },
-//   isOutlined: false, // Filled button
-// )
-
-// CustomButton(
-//   text: "Cancel",
-//   onPressed: () {
-//     print("Outlined Button Clicked");
-//   },
-//   isOutlined: true, // Outlined button
-// )

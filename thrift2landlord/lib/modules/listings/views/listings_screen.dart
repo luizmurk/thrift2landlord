@@ -15,18 +15,13 @@ class ListingsScreen extends StatelessWidget {
       )),
       body: Column(
         children: [
-          PropertyListTile(
-            imageUrls: ['assets/images/logo_dark.jpeg'], // List of image URLs
-            title: "property.title", // Property title
-            rating: 4.3, // Double rating (e.g., 4.3)
-            category: "Affordable", // e.g., "Affordable"
-          ),
-          CustomDivider(),
-          PropertyListTile(
-            imageUrls: ['assets/images/logo_light.jpeg'], // List of image URLs
-            title: "property.title", // Property title
-            rating: 4.3, // Double rating (e.g., 4.3)
-            category: "Affordable", // e.g., "Affordable"
+          SettingsListTile(
+            icon: Icons.account_circle,
+            title: "Account Settings",
+            subtitle: "Manage your account details",
+            onTap: () {
+              // Navigate to account settings
+            },
           ),
         ],
       ),

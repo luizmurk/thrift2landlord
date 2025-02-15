@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../modules/auth/index.dart';
 import '../themes/app_colors.dart';
 import '../themes/app_sizes.dart';
 import '../themes/app_typography.dart';
@@ -19,3 +20,4 @@ part './others/empty_state.dart';
 part './search/search_bar.dart';
 part './others/custom_bottom_sheet.dart';
 part './others/custom_list_tile.dart';
+part './inputs/password_input.dart';

@@ -19,12 +19,13 @@ class AppSizes {
   static double bodySmall = 8.sp;
 
   // Padding, Radius, Borders & Spacing
-  static double primaryPadding = 4.w;
+  static double primaryPadding = 10.w;
   static double primaryMargin = 5.w;
   static double primaryRadius = 2.r;
   static double primaryGapHeight = 16.h;
   static double primaryGapWidth = 16.w;
   static double primaryBorderThickness = 1.w;
+  static double primaryDividerThickness = 5.w;
 
   // Icons
   static double bigIcon = 26.w;
@@ -34,4 +35,5 @@ class AppSizes {
   // Standard Width & Height
   static double logoWidthSplash = 300.w;
   static double logoHeightSplash = 300.w;
+  static double logoHeightAuth = 200.w;
 }

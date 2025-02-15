@@ -7,6 +7,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  final AuthController _authController = Get.put(AuthController());
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward().then((_) {
       Future.delayed(const Duration(seconds: 1), () {
-        Get.offNamed(AppRoutes.listings); // Navigate to ListingsScreen
+        _authController.checkLoggedInUser();
       });
     });
   }

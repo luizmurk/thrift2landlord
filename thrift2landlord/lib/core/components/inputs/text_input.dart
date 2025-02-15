@@ -30,6 +30,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -39,15 +40,16 @@ class CustomTextField extends StatelessWidget {
       onTap: onTap,
       onChanged: onChanged,
       validator: validator,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: Theme.of(context).textTheme.labelMedium,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.labelMedium,
+        hintStyle: Theme.of(context).textTheme.bodyMedium,
         prefixIcon: prefixIcon,
+        prefixIconColor: AppColors.primary,
         suffixIcon: suffixIcon,
         counterText: "",
         filled: true,
-        fillColor: AppColors.light,
+        fillColor: isDarkMode ? AppColors.dark : AppColors.light,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
           borderSide: BorderSide(color: AppColors.offWhite),

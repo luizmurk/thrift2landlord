@@ -27,10 +27,12 @@ class AuthController extends GetxController {
   }
 
   Future<void> checkLoggedInUser() async {
-    UserModel? storedUser = await _authService.getUserFromStorage();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.clear();
+    UserModel? storedUser = await SharedService.getUserFromStorage();
     if (storedUser != null) {
       currentUser.value = storedUser;
-      Get.offAllNamed(AppRoutes.listings); // Navigate to Home Screen
+      Get.offAllNamed(AppRoutes.home); // Navigate to Home Screen
     } else {
       Get.offAllNamed(AppRoutes.signIn);
     }
@@ -61,7 +63,10 @@ class AuthController extends GetxController {
 
     isLoading.value = true;
     User? userCredential = await _authService.signUp(
-        emailController.text.trim(), passwordController.text);
+        phoneNumberController.text.trim().toString(),
+        emailController.text.trim(),
+        passwordController.text,
+        nameController.text.trim());
     isLoading.value = false;
 
     if (userCredential != null) {
@@ -129,7 +134,9 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     isLoading.value = true;
     await _authService.signOut();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
     isLoading.value = false;
-    Get.offAllNamed(AppRoutes.login);
+    Get.offAllNamed(AppRoutes.signIn);
   }
 }

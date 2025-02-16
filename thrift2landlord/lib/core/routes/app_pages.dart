@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
 import '../../modules/auth/index.dart';
+import '../../modules/chat/index.dart';
+import '../../modules/home/index.dart';
 import '../../modules/listings/index.dart';
+import '../../modules/payments/index.dart';
+import '../../modules/profile/index.dart';
+import '../../modules/properties/index.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -33,6 +38,31 @@ class AppPages {
       name: AppRoutes.emailVerify,
       page: () => EmailVerificationScreen(),
       // binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.home,
+      page: () => HomeScreen(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.properties,
+      page: () => PropertiesScreen(),
+      binding: PropertiesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.payments,
+      page: () => PaymentsScreen(),
+      binding: PaymentsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileScreen(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.chat,
+      page: () => ChatScreen(),
+      binding: ChatBinding(),
     ),
     //   GetPage(
     //   name: AppRoutes.splash,

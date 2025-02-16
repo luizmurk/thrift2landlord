@@ -23,6 +23,7 @@ class CustomBottomSheet extends StatelessWidget {
       backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
       shape: Theme.of(context).bottomSheetTheme.shape,
       isScrollControlled: true,
+      enableDrag: true, // Allows the bottom sheet to be draggable
       builder: (context) =>
           CustomBottomSheet(title: title, child: child, height: height),
     );
@@ -30,35 +31,33 @@ class CustomBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: height ??
-          MediaQuery.of(context).size.height *
-              0.4, // Default to 40% screen height
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 10),
-          Expanded(child: child),
-        ],
-      ),
+    return DraggableScrollableSheet(
+      expand: false, // Allows free vertical dragging
+      initialChildSize: 0.8, // Default height as 40% of screen
+      minChildSize: 0.2, // Minimum height
+      maxChildSize: 0.9, // Maximum height before fully expanded
+      builder: (context, scrollController) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Theme.of(context).bottomSheetTheme.backgroundColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(title, style: Theme.of(context).textTheme.labelLarge),
+              const SizedBox(height: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: child,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
-
-// HOW TO USE
-// CustomBottomSheet.show(
-//   context: context,
-//   title: 'Bottom Sheet Title',
-//   child: Column(
-//     children: [
-//       Text('This is a reusable bottom sheet.', style: Theme.of(context).textTheme.bodyText1),
-//       const SizedBox(height: 20),
-//       ElevatedButton(
-//         onPressed: () => Navigator.pop(context),
-//         child: const Text('Close'),
-//       ),
-//     ],
-//   ),
-// );

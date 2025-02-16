@@ -6,18 +6,24 @@ class UserModel {
   final String id;
   final String name;
   final String email;
+  final String phoneNumber;
   final String? photoUrl;
   final String? role;
   final DateTime? createdAt;
+  final int? rating;
+  final int? propertiesListed;
   final List<String>? achievements; // Stores milestone achievements
 
   UserModel({
     required this.id,
     required this.name,
     required this.email,
+    required this.phoneNumber,
     this.photoUrl,
     this.role,
     this.createdAt,
+    this.rating,
+    this.propertiesListed,
     this.achievements,
   });
 
@@ -27,9 +33,12 @@ class UserModel {
       id: docId,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
+      phoneNumber: map['phoneNumber'] ?? '',
       photoUrl: map['photoUrl'],
       role: map['role'] ?? 'user',
       createdAt: DateTime.now(),
+      rating: 0,
+      propertiesListed: 0,
       achievements: List<String>.from(map['achievements'] ?? []),
     );
   }
@@ -40,9 +49,12 @@ class UserModel {
       'id': id,
       'name': name,
       'email': email,
+      'phoneNumber': phoneNumber,
       'photoUrl': photoUrl,
       'role': role,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
+      'rating': rating ?? 0,
+      'propertiesListed': propertiesListed ?? 0,
       'achievements': achievements ?? [],
     };
   }

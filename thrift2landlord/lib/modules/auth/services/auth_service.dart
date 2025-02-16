@@ -24,14 +24,16 @@ class AuthService extends AppService {
 
       if (user != null) {
         // Check if user exists in Firestore
-        DocumentSnapshot userDoc =
-            await _firestore.collection('users').doc(user.uid).get();
+        DocumentSnapshot userDoc = await _firestore
+            .collection(FirebaseCollections.users)
+            .doc(user.uid)
+            .get();
 
         UserModel userModel = UserModel(
-          id: user.uid,
-          email: user.email ?? '',
-          name: user.displayName ?? '',
-        );
+            id: user.uid,
+            email: user.email ?? '',
+            name: user.displayName ?? '',
+            phoneNumber: "");
 
         if (!userDoc.exists) {
           // Store in Firebase if new user
@@ -41,7 +43,8 @@ class AuthService extends AppService {
               .set(userModel.toMap());
         }
 
-        await storeUserLocally(userModel); // Save in SharedPreferences
+        await SharedService.storeUserLocally(
+            userModel); // Save in SharedPreferences
       }
 
       return user;
@@ -52,28 +55,27 @@ class AuthService extends AppService {
   }
 
   // Sign up with email & password
-  Future<User?> signUp(String email, String password) async {
+  Future<User?> signUp(
+      String phone, String email, String password, String name) async {
     try {
       final UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print("User created: ${userCredential.user?.uid}");
+      print("User created: ${userCredential}");
       final User? user = userCredential.user;
       if (user != null) {
         UserModel userModel = UserModel(
-          id: user.uid,
-          email: email,
-          name: user.displayName ?? '',
-        );
+            id: user.uid, email: email, name: name, phoneNumber: phone);
 
         await _firestore
             .collection('users')
             .doc(user.uid)
             .set(userModel.toMap());
         await sendEmailVerification();
-        await storeUserLocally(userModel); // Save in SharedPreferences
+        await SharedService.storeUserLocally(
+            userModel); // Save in SharedPreferences
       }
       return user;
     } on FirebaseAuthException catch (e) {
@@ -101,7 +103,21 @@ class AuthService extends AppService {
         email: email,
         password: password,
       );
-      return userCredential.user;
+      final User? user = userCredential.user;
+      if (user != null) {
+        UserModel userModel = UserModel(
+            id: user.uid,
+            email: email,
+            name: user.displayName ?? '',
+            phoneNumber: "");
+
+        UserModel? storedUser = await SharedService.getUserFromStorage();
+        if (storedUser == null) {
+          await SharedService.storeUserLocally(
+              userModel); // Save in SharedPreferences// Navigate to Home Screen
+        }
+      }
+      return user;
     } catch (e) {
       CustomSnackbar.show("Invalid Credentials", isError: true);
       return null;
@@ -133,21 +149,6 @@ class AuthService extends AppService {
     } catch (e) {
       CustomSnackbar.show("Error: Unable to send reset email.", isError: true);
     }
-  }
-
-  Future<void> storeUserLocally(UserModel user) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user', user.toJson());
-  }
-
-  Future<UserModel?> getUserFromStorage() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userData = prefs.getString('user');
-
-    if (userData != null) {
-      return UserModel.fromJson(userData);
-    }
-    return null;
   }
 
   Future<void> clearUserData() async {

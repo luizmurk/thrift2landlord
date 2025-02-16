@@ -35,9 +35,9 @@ class PropertyListTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
                     image: DecorationImage(
-                      image: Image.asset(imageUrls[index]).image,
+                      // image: Image.asset(imageUrls[index]).image,
 
-                      // image: NetworkImage(imageUrls[index]),
+                      image: NetworkImage(imageUrls[index]),
                       fit: BoxFit.cover,
                     ),
                   ),

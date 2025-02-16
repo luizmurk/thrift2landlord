@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thrift2landlord/core/services/shared_services.dart';
 
 import '../../core/components/index.dart';
 import '../../core/models/data/user_model.dart';
@@ -14,6 +15,7 @@ import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../../core/themes/app_typography.dart';
 import '../../core/utils/custom_divider.dart';
+import '../../data/repositories/collections.dart';
 import '../listings/index.dart';
 
 part './views/splash.dart';

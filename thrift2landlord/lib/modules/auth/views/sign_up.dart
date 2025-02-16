@@ -86,18 +86,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: AppSizes.primaryGapHeight),
 
-                // Role Dropdown
-                CustomDropdown(
-                  value: selectedRole,
-                  items: roles,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedRole = value;
-                    });
-                  },
-                  labelText: "Select Role",
-                ),
-                SizedBox(height: AppSizes.primaryGapHeight),
+                // // Role Dropdown
+                // CustomDropdown(
+                //   value: selectedRole,
+                //   items: roles,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       selectedRole = value;
+                //     });
+                //   },
+                //   labelText: "Select Role",
+                // ),
+                // SizedBox(height: AppSizes.primaryGapHeight),
 
                 // Submit Button with Loading State
                 Obx(() => CustomPrimaryButton(

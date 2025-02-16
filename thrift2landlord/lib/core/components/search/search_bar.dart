@@ -3,24 +3,21 @@ part of '../index.dart';
 class CustomSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  final VoidCallback? onTap;
-  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
 
   const CustomSearchBar({
     Key? key,
     required this.controller,
     this.hintText = "Search...",
-    this.onTap,
-    this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       textAlignVertical: TextAlignVertical.center,
+      onSubmitted: onSubmitted,
       controller: controller,
-      onTap: onTap,
-      onChanged: onChanged,
       style: Theme.of(context).textTheme.bodyLarge, // Uses global typography
       decoration: InputDecoration(
         hintText: hintText,

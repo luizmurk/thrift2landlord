@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:thrift2landlord/core/components/index.dart';
-
-import '../../core/components/others/custom_settings_tile.dart';
-import '../../core/services/listings_services.dart';
+import '../../core/components/index.dart';
+import '../../core/models/data/listings/category_model.dart';
+import '../../core/models/data/listings/document_model.dart';
+import '../../core/models/data/listings/property_listings_model.dart';
+import '../../core/models/data/listings/review_model.dart';
+import '../../core/models/data/user_model.dart';
+import '../../core/services/app_services.dart';
+import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../../core/utils/custom_divider.dart';
-import '../../core/utils/sample_form_screen.dart';
+import '../../data/repositories/images.dart';
 
 part './controllers/listings_controller.dart';
+part './services/listings_service.dart';
+part './services/mock_data_service.dart';
 part './views/listings_screen.dart';
 part './widgets/skeletons/listings_skeleton.dart';
+part './widgets/category_card.dart';
+part './widgets/realtor_card.dart';
+part './widgets/listings_card.dart';
+part './widgets/listings_search_modal.dart';
+part './widgets/listing.dart';
+part './widgets/listing_of_the_day_card.dart';
 part './listings_bindings.dart';
+part './widgets/skeletons/categories_skeleton.dart';
+part './widgets/skeletons/listing_of_the_day_skeleton.dart';
+part './widgets/skeletons/realtors_skeleton.dart';

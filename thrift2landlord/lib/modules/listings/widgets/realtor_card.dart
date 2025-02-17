@@ -36,7 +36,7 @@ class RealtorCard extends StatelessWidget {
             width: AppSizes.realtorImageWidth,
             height: AppSizes.realtorImageHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
               image: DecorationImage(
                 image: NetworkImage(profileImage),
                 fit: BoxFit.cover,
@@ -50,12 +50,14 @@ class RealtorCard extends StatelessWidget {
               Text(
                 name,
                 style: Theme.of(context).textTheme.bodyMedium,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: AppSizes.secondaryGapHeight),
               Row(
                 children: [
-                  Icon(Icons.star, color: AppColors.primary, size: 16),
-                  SizedBox(width: 4.w),
+                  Icon(Icons.star,
+                      color: AppColors.primary, size: AppSizes.mediumIcon),
+                  SizedBox(width: AppSizes.secondaryGapWidth),
                   Text('$rating', style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),

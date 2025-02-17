@@ -23,7 +23,7 @@ class AppSizes {
   static double p8 = 8.w;
   static double ph3 = 3.h; // ✅ Added for smaller spacing
   static double p16 = 16.w;
-  static double ph10 = 16.h;
+  static double ph10 = 10.h;
   static double p24 = 24.w; // ✅ Added for larger spacing
   static double primaryMargin = 5.w;
 
@@ -34,6 +34,7 @@ class AppSizes {
   static double secondaryGapHeight = 3.h;
   static double mediumGap = 10.h;
   static double primaryGapWidth = 16.w;
+  static double secondaryGapWidth = 4.w;
   static double primaryBorderThickness = 1.w;
   static double primaryDividerThickness = 5.w;
   static double secondaryDividerThickness = 1.w;
@@ -59,4 +60,6 @@ class AppSizes {
   static double listingCardImageWidth = 150.w;
   static double listingCardImageHeight = 80.w;
   static double listingCardHeight = 190.h;
+  static double categoryCardHeight = 100.h;
+  static double categoryCardWidth = 100.w;
 }

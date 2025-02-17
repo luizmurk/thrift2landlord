@@ -22,6 +22,24 @@ class ListingsService extends AppService {
     }
   }
 
+  Future<List<ListingModel>> fetchYourListings(String id) async {
+    try {
+      if (isMock) {
+        // Fetch from mock data
+        return await MockDataService.getYourListings();
+      } else {
+        // Fetch from Firebase
+        final response = await firestore.collection('categories').get();
+        return [];
+        // return response.docs
+        //     .map((doc) => CategoryModel.fromMap(doc.data(), doc.id))
+        //     .toList();
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<List<ListingModel>> searchListings(
       String? id, String? query, String? realtorId) async {
     try {

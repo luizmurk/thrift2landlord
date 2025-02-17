@@ -6,10 +6,12 @@ class ListingsController extends GetxController {
   var realtors = <UserModel>[].obs;
   var listings = <ListingModel>[].obs;
   var listingsFromSearch = <ListingModel>[].obs;
+  var yourListings = <ListingModel>[].obs;
   var listing = Rxn<ListingModel>();
   var listingOfTheDay = Rxn<ListingModel>();
   var isLoading = true.obs;
   var isLoadingListingsFromSearch = true.obs;
+  var isLoadingYourListings = true.obs;
   var isLoadingCategories = true.obs;
   var isLoadingListings = true.obs;
   var isLoadingListingOfTheDay = true.obs;
@@ -18,8 +20,10 @@ class ListingsController extends GetxController {
   var hasErrorCategories = false.obs;
   var hasErrorListings = false.obs;
   var hasErrorListingsFromSearch = false.obs;
+  var hasErrorLoadingYourListings = false.obs;
   var hasErrorListingOfTheDay = false.obs;
   var hasErrorRealtors = false.obs;
+  var currentUser = Rxn<UserModel>();
 
   ListingsController({bool isMock = true}) {
     _service.isMock = isMock;
@@ -27,11 +31,15 @@ class ListingsController extends GetxController {
 
   @override
   void onInit() {
-    fetchCategories();
-    fetchListings();
-    getListingOfTheDay();
-    fetchRealtors();
+    checkLoggedInUser();
     super.onInit();
+  }
+
+  Future<void> checkLoggedInUser() async {
+    UserModel? storedUser = await SharedService.getUserFromStorage();
+    if (storedUser != null) {
+      currentUser.value = storedUser; // Navigate to Home Screen
+    }
   }
 
   Future<void> fetchCategories() async {
@@ -46,7 +54,20 @@ class ListingsController extends GetxController {
     }
   }
 
-  Future<void> getListingsByCategory(
+  Future<void> getYourListings() async {
+    try {
+      isLoadingYourListings(true);
+      hasErrorLoadingYourListings(false);
+      yourListings.value =
+          await _service.fetchYourListings(currentUser.value!.id);
+    } catch (e) {
+      hasErrorLoadingYourListings(true);
+    } finally {
+      isLoadingYourListings(false);
+    }
+  }
+
+  Future<void> searchListings(
       String? categoryId, String? query, String? realtorId) async {
     try {
       isLoadingListingsFromSearch(true);
@@ -54,7 +75,7 @@ class ListingsController extends GetxController {
       listingsFromSearch.value =
           await _service.searchListings(categoryId, query, realtorId);
     } catch (e) {
-      isLoading(true);
+      hasErrorListingsFromSearch(true);
     } finally {
       isLoadingListingsFromSearch(false);
     }

@@ -1,9 +1,22 @@
 part of '../index.dart';
 
-class ListingsScreen extends StatelessWidget {
+class ListingsScreen extends StatefulWidget {
+  @override
+  _ListingsScreenState createState() => _ListingsScreenState();
+}
+
+class _ListingsScreenState extends State<ListingsScreen> {
   final ListingsController controller = Get.put(ListingsController());
-  final TextEditingController searchController =
-      TextEditingController(); // Add this
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchCategories();
+    controller.fetchListings();
+    controller.getListingOfTheDay();
+    controller.fetchRealtors();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +37,12 @@ class ListingsScreen extends StatelessWidget {
             icon: Icon(Icons.help_outline),
             onPressed: () {
               // Add your help and support action here
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Add your notifications action here
             },
           ),
         ],

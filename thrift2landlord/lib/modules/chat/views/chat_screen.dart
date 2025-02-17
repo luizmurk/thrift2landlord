@@ -23,6 +23,12 @@ class ChatScreen extends StatelessWidget {
               // Add your help and support action here
             },
           ),
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Add your notifications action here
+            },
+          ),
         ],
       ),
       body: Center(

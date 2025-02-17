@@ -31,7 +31,7 @@ class ListingsCard extends StatelessWidget {
             width: AppSizes.listingCardImageWidth,
             height: AppSizes.listingCardImageHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
               image: DecorationImage(
                 image: NetworkImage(listing.imageUrls.first),
                 fit: BoxFit.cover,
@@ -46,7 +46,8 @@ class ListingsCard extends StatelessWidget {
           SizedBox(height: AppSizes.secondaryGapHeight),
           Row(
             children: [
-              Icon(Icons.star, color: AppColors.primary, size: 16),
+              Icon(Icons.star,
+                  color: AppColors.primary, size: AppSizes.primaryGapWidth),
               SizedBox(width: AppSizes.ratingGapWidth),
               Text('${listing.rating}',
                   style: Theme.of(context).textTheme.bodySmall),

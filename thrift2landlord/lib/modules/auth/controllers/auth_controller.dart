@@ -49,7 +49,7 @@ class AuthController extends GetxController {
 
     if (userCredential != null) {
       if (userCredential.emailVerified) {
-        Get.offAllNamed(AppRoutes.listings);
+        Get.offAllNamed(AppRoutes.home);
       } else {
         CustomSnackbar.show("Please verify your email.", isError: true);
         isLoading.value = false;

@@ -3,6 +3,7 @@ part of '../index.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
   final EditProfileController _controller = Get.put(EditProfileController());
+  final ThemeController _themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return SizedBox(height: AppSizes.primaryGapHeight);
                           } else if (snapshot.hasError) {
                             return Text("Error loading user data");
                           } else if (!snapshot.hasData ||
@@ -72,13 +73,6 @@ class ProfileScreen extends StatelessWidget {
                   onTap: () {},
                 ),
                 SettingsListTile(
-                  icon: Icons.notifications,
-                  title: "Notifications",
-                  hasSwitch: true,
-                  switchValue: true,
-                  onSwitchChanged: (value) {},
-                ),
-                SettingsListTile(
                   icon: Icons.privacy_tip,
                   title: "Privacy",
                   onTap: () {},
@@ -88,6 +82,24 @@ class ProfileScreen extends StatelessWidget {
                   title: "Help & Support",
                   onTap: () {},
                 ),
+                SettingsListTile(
+                  icon: Icons.notifications,
+                  title: "Notifications",
+                  hasSwitch: true,
+                  switchValue: true,
+                  onSwitchChanged: (value) {},
+                ),
+                Obx(() {
+                  return SettingsListTile(
+                    icon: Icons.notifications,
+                    title: "Switch Theme",
+                    hasSwitch: true,
+                    switchValue: _themeController.isDarkMode.value,
+                    onSwitchChanged: (value) {
+                      _themeController.toggleTheme();
+                    },
+                  );
+                }),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
                   icon: Icons.logout,

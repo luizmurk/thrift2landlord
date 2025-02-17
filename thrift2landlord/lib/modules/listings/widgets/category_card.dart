@@ -17,8 +17,8 @@ class CategoryCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: 100,
-            height: 100,
+            width: AppSizes.categoryCardWidth,
+            height: AppSizes.categoryCardHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(imageUrl),
@@ -28,11 +28,13 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 8,
+            bottom: AppSizes.ph10,
             left: 8,
             child: Container(
               color: Colors.black54,
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.secondaryGapWidth,
+                  vertical: AppSizes.secondaryGapHeight),
               child: Text(
                 name,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(

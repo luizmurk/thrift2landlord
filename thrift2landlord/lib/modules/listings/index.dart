@@ -1,14 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../core/components/index.dart';
 import '../../core/models/data/listings/category_model.dart';
 import '../../core/models/data/listings/document_model.dart';
+import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
 import '../../core/models/data/listings/review_model.dart';
 import '../../core/models/data/user_model.dart';
 import '../../core/services/app_services.dart';
+import '../../core/services/shared_services.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../../core/utils/custom_divider.dart';

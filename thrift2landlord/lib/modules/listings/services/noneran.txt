@@ -1,27 +1,6 @@
 part of '../index.dart';
 
 class MockDataService {
-  static Random random = Random();
-  static final List<String> imageUrlsBucket = [
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting2.jpeg?alt=media&token=6e19178c-cfba-42fb-958a-73fc1b342576',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting1.jpeg?alt=media&token=925d9263-ca4a-496f-b2d2-90f2d074fab3',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting3.jpeg?alt=media&token=0483ca00-c854-4021-8082-8ba4f936186b',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting4.jpeg?alt=media&token=279348c0-7180-4ac4-bf76-57520f00facb',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting5.jpeg?alt=media&token=ba333e7a-2a44-49fb-add5-fda9c5bfb5dd',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting6.jpeg?alt=media&token=572ac8b1-184b-4553-809b-e11bc62e1ace',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting7.jpeg?alt=media&token=f8095cf6-a044-4169-8c9d-de4c385a7eaf',
-  ];
-
-  static final List<String> realtorImages = [
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor.jpeg?alt=media&token=9cc174d4-e52d-43a8-8071-870be45eed3e',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor.webp?alt=media&token=616b4228-29f5-4701-a815-35df0c117a14',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor2.jpeg?alt=media&token=383e0b57-0b4b-4a80-90eb-5700cf693188',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor3.jpeg?alt=media&token=ed879f91-e5b4-4efa-a20c-3a90a387d693',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor4.jpeg?alt=media&token=6b11efdb-2bcb-4be0-abc2-a4f6fce01f2c',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor5.jpeg?alt=media&token=60e413be-9b5a-46f5-9ed8-1e09cac1e658',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/realtors%2Frealtor2.jpeg?alt=media&token=383e0b57-0b4b-4a80-90eb-5700cf693188',
-  ];
-
   static Future<List<CategoryModel>> getCategories() async {
     await Future.delayed(
         Duration(milliseconds: 1100)); // Simulating network delay
@@ -41,18 +20,15 @@ class MockDataService {
     await Future.delayed(
         Duration(milliseconds: 1700)); // Simulating network delay
     return List.generate(
-      10,
-      (index) => UserModel(
-        id: '$index',
-        name: 'Realtor $index',
-        email: 'realtor$index@example.com',
-        phoneNumber: '123-456-7890',
-        photoUrl: realtorImages[
-            random.nextInt(realtorImages.length)], // ✅ Random selection
-        rating: index, // Random rating between 1 and 5
-        propertiesListed: index + 3,
-      ),
-    );
+        10,
+        (index) => UserModel(
+            id: '$index',
+            name: 'Realtor $index',
+            email: 'realtor$index@example.com',
+            phoneNumber: '123-456-7890',
+            photoUrl: ImageUrls.profilePlaceholder,
+            rating: index,
+            propertiesListed: index + 3));
   }
 
   static Future<List<ListingModel>> getListings() async {
@@ -70,10 +46,7 @@ class MockDataService {
               address: '123 Main St, City $index',
               price: 50000 + (index * 1000),
               owner: 'owner_$index',
-              imageUrls: List.generate(
-                  7,
-                  (i) =>
-                      imageUrlsBucket[random.nextInt(imageUrlsBucket.length)]),
+              imageUrls: List.generate(7, (i) => ImageUrls.profilePlaceholder),
               categories: [
                 CategoryModel(
                     id: '1',
@@ -117,10 +90,7 @@ class MockDataService {
               address: '123 Main St, City $index',
               price: 50000 + (index * 1000),
               owner: 'owner_$index',
-              imageUrls: List.generate(
-                  7,
-                  (i) =>
-                      imageUrlsBucket[random.nextInt(imageUrlsBucket.length)]),
+              imageUrls: List.generate(7, (i) => ImageUrls.profilePlaceholder),
               categories: [
                 CategoryModel(
                     id: '1',

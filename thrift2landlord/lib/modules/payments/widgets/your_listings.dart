@@ -1,10 +1,16 @@
 part of '../index.dart';
 
-class ListingOfTheDayCard extends StatelessWidget {
+class YourListing extends StatefulWidget {
   final ListingModel listing;
 
-  const ListingOfTheDayCard({super.key, required this.listing});
+  const YourListing({super.key, required this.listing});
 
+  @override
+  State<YourListing> createState() => _YourListingState();
+}
+
+class _YourListingState extends State<YourListing> {
+  final PaymentsController _paymentController = Get.find<PaymentsController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,16 +34,16 @@ class ListingOfTheDayCard extends StatelessWidget {
             // width: AppSizes.realtorImageWidth,
             height: AppSizes.listingOfTheDayheight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
               image: DecorationImage(
-                image: NetworkImage(listing.imageUrls.first),
+                image: NetworkImage(widget.listing.imageUrls.first),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           SizedBox(height: AppSizes.primaryGapHeight),
           Text(
-            listing.title,
+            widget.listing.title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -47,7 +53,7 @@ class ListingOfTheDayCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${listing.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                '\$${widget.listing.price.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
@@ -55,14 +61,16 @@ class ListingOfTheDayCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Icon(Icons.king_bed, size: 20, color: AppColors.primary),
-                  SizedBox(width: 4),
-                  Text('${listing.city}',
+                  Icon(Icons.king_bed,
+                      size: AppSizes.mediumIcon, color: AppColors.primary),
+                  SizedBox(width: AppSizes.secondaryGapWidth),
+                  Text('${widget.listing.city}',
                       style: Theme.of(context).textTheme.bodyMedium),
-                  SizedBox(width: 8),
-                  Icon(Icons.bathtub, size: 20, color: AppColors.primary),
-                  SizedBox(width: 4),
-                  Text('${listing.country}',
+                  SizedBox(width: AppSizes.primaryGapWidth),
+                  Icon(Icons.bathtub,
+                      size: AppSizes.mediumIcon, color: AppColors.primary),
+                  SizedBox(width: AppSizes.secondaryGapWidth),
+                  Text('${widget.listing.country}',
                       style: Theme.of(context).textTheme.bodyMedium),
                 ],
               ),
@@ -73,10 +81,10 @@ class ListingOfTheDayCard extends StatelessWidget {
             children: [
               Icon(Icons.location_on,
                   size: AppSizes.bigIcon, color: AppColors.primary),
-              SizedBox(width: 4),
+              SizedBox(width: AppSizes.secondaryGapWidth),
               Expanded(
                 child: Text(
-                  listing.address,
+                  widget.listing.address,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -85,6 +93,14 @@ class ListingOfTheDayCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          SizedBox(height: AppSizes.primaryGapHeight),
+          CustomSecondaryButton(
+            text: "View Payment History",
+            onPressed: () {
+              _paymentController.showPaymentHistory(
+                  context, widget.listing.paymentHistory, 10.0, 7, false);
+            },
           ),
         ],
       ),

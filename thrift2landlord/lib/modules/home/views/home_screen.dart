@@ -16,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen>
     ListingsScreen(),
     ChatScreen(),
     PaymentsScreen(),
-    PropertiesScreen(),
     ProfileScreen(),
   ];
 
@@ -75,14 +74,13 @@ class _HomeScreenState extends State<HomeScreen>
             selectedItemColor: Theme.of(context).brightness == Brightness.dark
                 ? AppColors.dark
                 : AppColors.light,
-            unselectedItemColor: Colors.white.withOpacity(0.5),
+            unselectedItemColor: AppColors.offWhite,
             showUnselectedLabels: true,
             elevation: 100.0, // Added elevation for the bottom navigation bar
             items: [
               _buildNavItem(Icons.home, "Listings", 0),
               _buildNavItem(Icons.chat, "Chat", 1),
               _buildNavItem(Icons.payment, "Payments", 2),
-              _buildNavItem(Icons.business, "Properties", 3),
               BottomNavigationBarItem(
                 icon: CustomAvatar(
                   imageUrl: ImageUrls.profilePlaceholder,

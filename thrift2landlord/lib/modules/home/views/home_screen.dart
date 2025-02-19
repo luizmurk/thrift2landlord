@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen>
   late PageController _pageController;
 
   final List<Widget> _pages = [
+    LandingScreen(),
     ListingsScreen(),
     ChatScreen(),
     PaymentsScreen(),
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen>
         margin: EdgeInsets.symmetric(
             horizontal: AppSizes.p16, vertical: AppSizes.ph10),
         decoration: BoxDecoration(
-          color: AppColors.primary,
+          color: AppColors.grey,
           borderRadius: BorderRadius.circular(AppSizes.radiusXL),
           border: Border.all(
             color: AppColors.offWhite, // Use AppColors for the border color
@@ -70,16 +71,15 @@ class _HomeScreenState extends State<HomeScreen>
             currentIndex: _currentIndex,
             onTap: _onTabTapped,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: AppColors.primary,
-            selectedItemColor: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.dark
-                : AppColors.light,
+            backgroundColor: AppColors.grey,
+            selectedItemColor: AppColors.primary,
             unselectedItemColor: AppColors.offWhite,
             showUnselectedLabels: true,
             elevation: 100.0, // Added elevation for the bottom navigation bar
             items: [
-              _buildNavItem(Icons.home, "Listings", 0),
-              _buildNavItem(Icons.chat, "Chat", 1),
+              _buildNavItem(Icons.home, "Home", 0),
+              _buildNavItem(Icons.search, "Listings", 0),
+              _buildNavItem(Icons.circle, "Properties", 1),
               _buildNavItem(Icons.payment, "Payments", 2),
               BottomNavigationBarItem(
                 icon: CustomAvatar(

@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final VoidCallback? onTap;
   final bool readOnly;
   final int? maxLength;
+  final bool? isPrefixed;
 
   const CustomTextField({
     Key? key,
@@ -25,6 +26,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.onTap,
     this.readOnly = false,
+    this.isPrefixed = false,
     this.maxLength,
   }) : super(key: key);
 
@@ -44,7 +46,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.bodyMedium,
-        prefixIcon: prefixIcon,
+        prefixIcon: isPrefixed == true ? prefixIcon : null,
         prefixIconColor: AppColors.primary,
         suffixIcon: suffixIcon,
         counterText: "",

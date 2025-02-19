@@ -7,7 +7,7 @@ import 'app_typography.dart';
 class AppTheme {
   // Define Light Theme
   static final ThemeData lightTheme = ThemeData(
-    fontFamily: 'Karla',
+    fontFamily: 'Poppins',
     brightness: Brightness.light,
     primaryColor: AppColors.light,
     scaffoldBackgroundColor: AppColors.light,
@@ -24,7 +24,7 @@ class AppTheme {
 
   // Define Dark Theme
   static final ThemeData darkTheme = ThemeData(
-    fontFamily: 'Karla',
+    fontFamily: 'Poppins',
     brightness: Brightness.dark,
     primaryColor: AppColors.dark,
     scaffoldBackgroundColor: AppColors.dark,

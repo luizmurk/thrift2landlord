@@ -12,6 +12,7 @@ import '../../core/utils/custom_divider.dart';
 import '../../core/utils/sample_form_screen.dart';
 import '../../data/repositories/images.dart';
 import '../chat/index.dart';
+import '../landing/index.dart';
 import '../listings/index.dart';
 import '../payments/index.dart';
 import '../profile/index.dart';

@@ -34,7 +34,7 @@ class AuthController extends GetxController {
       currentUser.value = storedUser;
       Get.offAllNamed(AppRoutes.home); // Navigate to Home Screen
     } else {
-      Get.offAllNamed(AppRoutes.signIn);
+      Get.offAllNamed(AppRoutes.onboarding);
     }
   }
 

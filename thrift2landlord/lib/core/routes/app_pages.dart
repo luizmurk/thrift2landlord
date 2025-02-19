@@ -3,6 +3,7 @@ import '../../modules/auth/index.dart';
 import '../../modules/chat/index.dart';
 import '../../modules/home/index.dart';
 import '../../modules/listings/index.dart';
+import '../../modules/onboarding/index.dart';
 import '../../modules/payments/index.dart';
 import '../../modules/profile/index.dart';
 import '../../modules/properties/index.dart';
@@ -13,6 +14,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.splash,
       page: () => SplashScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.onboarding,
+      page: () => OnboardingScreen(),
     ),
     GetPage(
       name: AppRoutes.listings,
@@ -62,7 +67,6 @@ class AppPages {
     GetPage(
       name: AppRoutes.chat,
       page: () => ChatScreen(),
-      binding: ChatBinding(),
     ),
     //   GetPage(
     //   name: AppRoutes.splash,

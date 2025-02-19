@@ -13,20 +13,33 @@ class EmailVerificationScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Verify Your Email",
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    "Confirm Your Email",
+                    style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: AppSizes.primaryGapHeight),
                   Text(
-                    "A verification link has been sent to your email. Please check your inbox.",
+                    "We sent a confirmation email to",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black),
                   ),
                   SizedBox(height: AppSizes.primaryGapHeight),
-                  CustomSecondaryButton(
-                    text: "Resend Email",
-                    onPressed: _authController.resendVerificationEmail,
+                  Text(
+                    _authController.emailController.text,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: AppSizes.primaryGapHeight),
+                  Text(
+                    "Please check your email and click on the confirmation link and come back to this app to continue.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black),
                   ),
                   SizedBox(height: AppSizes.primaryGapHeight),
                   CustomPrimaryButton(

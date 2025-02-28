@@ -14,10 +14,7 @@ import '../../core/routes/app_routes.dart';
 import '../../core/services/app_services.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
-import '../../core/themes/app_typography.dart';
-import '../../core/utils/custom_divider.dart';
 import '../../data/repositories/collections.dart';
-import '../listings/index.dart';
 
 part './views/splash.dart';
 part './services/auth_service.dart';

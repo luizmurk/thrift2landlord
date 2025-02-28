@@ -14,7 +14,7 @@ class SettingsListTile extends StatelessWidget {
   final ValueChanged<bool>? onSwitchChanged;
 
   const SettingsListTile({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     this.subtitle,
@@ -22,7 +22,7 @@ class SettingsListTile extends StatelessWidget {
     this.hasSwitch = false,
     this.switchValue = false,
     this.onSwitchChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

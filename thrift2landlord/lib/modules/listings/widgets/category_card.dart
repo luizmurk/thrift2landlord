@@ -5,10 +5,10 @@ class CategoryCard extends StatelessWidget {
   final String name;
 
   const CategoryCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.name,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

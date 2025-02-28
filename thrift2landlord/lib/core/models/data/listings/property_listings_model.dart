@@ -1,3 +1,6 @@
+import 'package:thrift2landlord/core/models/data/listings/installment_plan_model.dart';
+import 'package:thrift2landlord/core/models/data/listings/location_model.dart';
+
 import 'category_model.dart';
 import 'document_model.dart';
 import 'payment_model.dart';
@@ -7,13 +10,16 @@ import 'review_model.dart';
 class ListingModel {
   final String id;
   final String title;
-  final Map<String, double> location;
+  final String? description;
+  final LocationModel location;
   final String state;
   final String country;
   final String city;
   final String address;
   final double price;
-  final String owner;
+  final String? owner;
+  final String? ownershipType;
+  final String? landStatus;
   final List<String> imageUrls;
   final List<CategoryModel> categories;
   final List<String> tags;
@@ -23,7 +29,7 @@ class ListingModel {
   final List<DocumentModel> documents;
   final bool isInstallmentAvailable;
   final int installmentMonths;
-  final List<Map<String, dynamic>> installmentPlan;
+  final InstallmentPlanModel? installmentPlan;
   final double totalPaidAmount;
   final bool isFullyPaid;
   final String? buyerId;
@@ -32,6 +38,7 @@ class ListingModel {
   ListingModel({
     required this.id,
     required this.title,
+    this.description,
     required this.location,
     required this.state,
     required this.country,
@@ -39,6 +46,8 @@ class ListingModel {
     required this.address,
     required this.price,
     required this.owner,
+    this.ownershipType,
+    this.landStatus,
     required this.imageUrls,
     required this.categories,
     required this.tags,
@@ -59,13 +68,16 @@ class ListingModel {
     return ListingModel(
       id: id,
       title: map['title'] ?? '',
-      location: Map<String, double>.from(map['location'] ?? {}),
+      description: map['description'] ?? '',
+      location: LocationModel.fromJson(map['location']),
       state: map['state'] ?? '',
       country: map['country'] ?? '',
       city: map['city'] ?? '',
       address: map['address'] ?? '',
       price: (map['price'] ?? 0.0).toDouble(),
-      owner: map['owner'] ?? '',
+      owner: map['owner'],
+      ownershipType: map['ownershipType'] ?? '',
+      landStatus: map['landStatus'] ?? '',
       imageUrls: List<String>.from(map['imageUrls'] ?? []),
       categories: (map['categories'] as List?)
               ?.map((e) => CategoryModel.fromMap(e, e['id']))
@@ -84,8 +96,7 @@ class ListingModel {
           [],
       isInstallmentAvailable: map['isInstallmentAvailable'] ?? false,
       installmentMonths: map['installmentMonths'] ?? 10,
-      installmentPlan:
-          List<Map<String, dynamic>>.from(map['installmentPlan'] ?? []),
+      installmentPlan: InstallmentPlanModel.fromMap(map['installmentPlan']),
       totalPaidAmount: (map['totalPaidAmount'] ?? 0.0).toDouble(),
       isFullyPaid: map['isFullyPaid'] ?? false,
       buyerId: map['buyerId'],
@@ -99,13 +110,16 @@ class ListingModel {
   Map<String, dynamic> toMap() {
     return {
       'title': title,
-      'location': location,
+      'description': description,
+      'location': location.toJson(),
       'state': state,
       'country': country,
       'city': city,
       'address': address,
       'price': price,
       'owner': owner,
+      'ownershipType': ownershipType,
+      'landStatus': landStatus,
       'imageUrls': imageUrls,
       'categories': categories
           .map((e) => {'id': e.id, 'name': e.name, 'imageUrl': e.imageUrl})
@@ -121,7 +135,7 @@ class ListingModel {
           documents.map((e) => {'name': e.name, 'url': e.url}).toList(),
       'isInstallmentAvailable': isInstallmentAvailable,
       'installmentMonths': installmentMonths,
-      'installmentPlan': installmentPlan,
+      'installmentPlan': installmentPlan!.toMap(),
       'totalPaidAmount': totalPaidAmount,
       'isFullyPaid': isFullyPaid,
       'buyerId': buyerId,

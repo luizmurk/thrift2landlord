@@ -2,72 +2,43 @@ part of '../index.dart';
 
 class ListingsService extends AppService {
   bool isMock;
-
+  final Random random = Random();
+  final String collectionPath = "listings";
   ListingsService({this.isMock = false});
 
-  Future<List<CategoryModel>> fetchCategories() async {
-    try {
-      if (isMock) {
-        // Fetch from mock data
-        return await MockDataService.getCategories();
-      } else {
-        // Fetch from Firebase
-        final response = await firestore.collection('categories').get();
-        return response.docs
-            .map((doc) => CategoryModel.fromMap(doc.data(), doc.id))
-            .toList();
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<ListingModel>> fetchYourListings(String id) async {
-    try {
-      if (isMock) {
-        // Fetch from mock data
-        return await MockDataService.getYourListings();
-      } else {
-        // Fetch from Firebase
-        final response = await firestore.collection('categories').get();
-        return [];
-        // return response.docs
-        //     .map((doc) => CategoryModel.fromMap(doc.data(), doc.id))
-        //     .toList();
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   Future<List<ListingModel>> searchListings(
-      String? id, String? query, String? realtorId) async {
+      String? field, String? query) async {
     try {
       if (isMock) {
         // Fetch from mock data
         return await MockDataService.getListings();
       } else {
-        // Fetch from Firebase
-        final response = await firestore.collection('categories').get();
-        return [];
-        // return response.docs
-        //     .map((doc) => CategoryModel.fromMap(doc.data(), doc.id))
-        //     .toList();
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
+        QuerySnapshot response;
 
-  Future<List<UserModel>> fetchRealtors() async {
-    if (isMock) {
-      return await MockDataService.getRealtors();
-    }
-    try {
-      final response = await firestore.collection('Users').get();
-      return response.docs
-          .map((doc) => UserModel.fromMap(doc.data(), doc.id))
-          .toList();
+        if (field == null || query == null) {
+          // Fetch all listings if no search filters are applied
+          response = await firestore.collection(collectionPath).get();
+        } else if (field == 'city') {
+          // Search by state (Exact match)
+          response = await firestore
+              .collection(collectionPath)
+              .where('city', isEqualTo: query)
+              .get();
+        } else if (field == 'tags') {
+          // Search by tags (Array contains match)
+          response = await firestore
+              .collection(collectionPath)
+              .where('tags', arrayContains: query)
+              .get();
+        } else {
+          return []; // Invalid field
+        }
+
+        return response.docs
+            .map((doc) => ListingModel.fromMap(
+                doc.data() as Map<String, dynamic>, doc.id))
+            .toList();
+      }
     } catch (e) {
       rethrow;
     }
@@ -87,15 +58,17 @@ class ListingsService extends AppService {
     }
   }
 
-  Future<ListingModel?> fetchListingOfTheDay() async {
-    if (isMock) {
-      return await MockDataService.getListingById("1");
-    }
+  Future<void> addMockListingToFirebase() async {
     try {
-      final response = await firestore.collection('listings').get();
-      return null;
+      List<ListingModel> mockedListings = await MockDataService.getListings();
+      ListingModel randomListing =
+          mockedListings[random.nextInt(mockedListings.length)];
+
+      await addDocument("listings", randomListing.toMap());
+
+      print('Mocked listing added successfully!');
     } catch (e) {
-      rethrow;
+      throw 'Error adding mocked listing: $e';
     }
   }
 
@@ -104,24 +77,13 @@ class ListingsService extends AppService {
       return await MockDataService.getListingById(id);
     }
     try {
-      final response = await firestore.collection('listings').get();
-      return null;
-    } catch (e) {
-      rethrow;
-    }
-  }
+      final doc = await firestore.collection('listings').doc(id).get();
 
-  Future<List<ListingModel>> fetchListingsByCategory(String categoryId) async {
-    try {
-      final response = await firestore
-          .collection('listings')
-          .where('categoryIds', arrayContains: categoryId)
-          .get();
-      return response.docs
-          .map((doc) => ListingModel.fromMap(doc.data(), doc.id))
-          .toList();
+      if (!doc.exists) return null; // Return null if the document doesn't exist
+
+      return ListingModel.fromMap(doc.data()!, doc.id);
     } catch (e) {
-      rethrow;
+      rethrow; // Rethrow the error for handling at the controller level
     }
   }
 }

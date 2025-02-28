@@ -7,12 +7,12 @@ class CustomSecondaryButton extends StatelessWidget {
   final IconData? icon;
 
   const CustomSecondaryButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.isDisabled = false,
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

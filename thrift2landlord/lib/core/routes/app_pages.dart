@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
+import 'package:thrift2landlord/core/components/others/complete_state.dart';
+import 'package:thrift2landlord/modules/landing/index.dart';
+import 'package:thrift2landlord/modules/notifications/index.dart';
 import '../../modules/auth/index.dart';
 import '../../modules/chat/index.dart';
 import '../../modules/home/index.dart';
 import '../../modules/listings/index.dart';
 import '../../modules/onboarding/index.dart';
+import '../../modules/payment_checkout/index.dart';
 import '../../modules/payments/index.dart';
 import '../../modules/profile/index.dart';
 import '../../modules/properties/index.dart';
@@ -23,6 +27,10 @@ class AppPages {
       name: AppRoutes.listings,
       page: () => ListingsScreen(),
       binding: ListingsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.listing,
+      page: () => ListingDetailsScreen(),
     ),
     GetPage(
       name: AppRoutes.signIn,
@@ -50,6 +58,22 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
+      name: AppRoutes.notifications,
+      page: () => NotificationsScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.completion,
+      page: () => CompletionStatePage(),
+    ),
+    GetPage(
+      name: AppRoutes.documents,
+      page: () => DocumentsPage(),
+    ),
+    GetPage(
+      name: AppRoutes.liked,
+      page: () => LikedProperties(),
+    ),
+    GetPage(
       name: AppRoutes.properties,
       page: () => PropertiesScreen(),
       binding: PropertiesBinding(),
@@ -58,6 +82,10 @@ class AppPages {
       name: AppRoutes.payments,
       page: () => PaymentsScreen(),
       binding: PaymentsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.payment_checkout,
+      page: () => PaymentCheckoutScreen(),
     ),
     GetPage(
       name: AppRoutes.profile,

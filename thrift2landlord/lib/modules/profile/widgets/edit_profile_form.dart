@@ -3,6 +3,8 @@ part of '../index.dart';
 class EditProfileForm extends StatelessWidget {
   final EditProfileController controller = Get.find<EditProfileController>();
 
+  EditProfileForm({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

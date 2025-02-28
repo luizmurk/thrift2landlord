@@ -4,6 +4,8 @@ import '../components/index.dart';
 import '../themes/app_sizes.dart';
 
 class SampleFormScreen extends StatefulWidget {
+  const SampleFormScreen({super.key});
+
   @override
   _SampleFormScreenState createState() => _SampleFormScreenState();
 }

@@ -7,12 +7,12 @@ class PropertyListTile extends StatelessWidget {
   final String category;
 
   const PropertyListTile({
-    Key? key,
+    super.key,
     required this.imageUrls,
     required this.title,
     required this.rating,
     required this.category,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

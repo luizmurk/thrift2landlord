@@ -9,8 +9,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Profile", style: Theme.of(context).textTheme.titleLarge),
-          centerTitle: true,
+          title: Text(
+            "Profile",
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(AppSizes.p16),
@@ -49,7 +51,23 @@ class ProfileScreen extends StatelessWidget {
                                         Theme.of(context).textTheme.titleLarge,
                                   );
                                 }),
-                                Text(user.email),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary.withOpacity(
+                                        0.5), // Adjust opacity here
+                                    borderRadius: BorderRadius.circular(
+                                        12), // Add border radius
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      user.email,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                )
                               ],
                             );
                           }
@@ -67,21 +85,7 @@ class ProfileScreen extends StatelessWidget {
                         context, _controller.currentUser.value!);
                   },
                 ),
-                SettingsListTile(
-                  icon: Icons.lock,
-                  title: "Security",
-                  onTap: () {},
-                ),
-                SettingsListTile(
-                  icon: Icons.privacy_tip,
-                  title: "Privacy",
-                  onTap: () {},
-                ),
-                SettingsListTile(
-                  icon: Icons.help,
-                  title: "Help & Support",
-                  onTap: () {},
-                ),
+                Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
                   icon: Icons.notifications,
                   title: "Notifications",
@@ -89,17 +93,35 @@ class ProfileScreen extends StatelessWidget {
                   switchValue: true,
                   onSwitchChanged: (value) {},
                 ),
-                Obx(() {
-                  return SettingsListTile(
-                    icon: Icons.notifications,
-                    title: "Switch Theme",
-                    hasSwitch: true,
-                    switchValue: _themeController.isDarkMode.value,
-                    onSwitchChanged: (value) {
-                      _themeController.toggleTheme();
-                    },
-                  );
-                }),
+                Divider(height: AppSizes.primaryGapHeight * 2),
+                SettingsListTile(
+                  icon: Icons.help,
+                  title: "Change Password",
+                  onTap: () {},
+                ),
+                Divider(height: AppSizes.primaryGapHeight * 2),
+                SettingsListTile(
+                  icon: Icons.mail,
+                  title: "Feedbacks",
+                  onTap: () {},
+                ),
+                Divider(height: AppSizes.primaryGapHeight * 2),
+                SettingsListTile(
+                  icon: Icons.help,
+                  title: "Terms and Conditions",
+                  onTap: () {},
+                ),
+                // Obx(() {
+                //   return SettingsListTile(
+                //     icon: Icons.notifications,
+                //     title: "Switch Theme",
+                //     hasSwitch: true,
+                //     switchValue: _themeController.isDarkMode.value,
+                //     onSwitchChanged: (value) {
+                //       _themeController.toggleTheme();
+                //     },
+                //   );
+                // }),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
                   icon: Icons.logout,

@@ -1,94 +1,163 @@
 part of '../index.dart';
 
 class PaymentsScreen extends StatefulWidget {
+  const PaymentsScreen({super.key});
+
   @override
   _PaymentsScreenState createState() => _PaymentsScreenState();
 }
 
 class _PaymentsScreenState extends State<PaymentsScreen> {
   final PaymentsController _controller = Get.put(PaymentsController());
+  final PropertiesController propertiesController =
+      Get.put(PropertiesController());
   final ListingsController _listingController = Get.find<ListingsController>();
   final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _listingController.getYourListings();
+    propertiesController.fetchProperties();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          Theme.of(context).brightness == Brightness.dark
-              ? 'assets/images/logo_dark.jpeg'
-              : 'assets/images/logo_light.jpeg',
-          width: AppSizes.homeIcon,
-          height: AppSizes.homeIcon,
+        title: Text(
+          "Payment",
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.help_outline),
+            icon: Icon(Icons.add),
             onPressed: () {
-              // Add your help and support action here
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              // Add your notifications action here
+              // Get.toNamed(AppRoutes.documents);
             },
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSizes.primaryPadding),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: AppSizes.primaryGapHeight),
-            CustomSearchBar(
-              controller: searchController,
-              hintText: "Search properties...",
-              onSubmitted: (query) {
-                _listingController.showListingsFromSearch(
-                    context, null, query, null);
-              }, // Show filter button
+            // Property Listings (Horizontal Scroll)
+            SizedBox(
+              height: 180,
+              child: Obx(() {
+                if (propertiesController.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (propertiesController.properties.isEmpty) {
+                  return Center(
+                      child: EmptyCMPState(
+                    title: '🚫 No Properties Yet!',
+                    body:
+                        'Explore available lands and make your first purchase today.',
+                    buttonText: 'Find Properties Now',
+                    onButtonPressed: () {
+                      Get.toNamed(AppRoutes.listings);
+                    },
+                  ));
+                }
+                return SizedBox(
+                  height: 180,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: propertiesController.properties.length,
+                    itemBuilder: (context, index) {
+                      return PropertyCard(
+                          listing: propertiesController.properties[index]);
+                    },
+                  ),
+                );
+              }),
             ),
-            SizedBox(height: AppSizes.primaryGapHeight),
-            Obx(() {
-              if (_listingController.isLoadingYourListings.value) {
-                return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
-              } else if (_listingController.hasErrorLoadingYourListings.value) {
-                return Text('Failed to load your listings');
-              } else if (_listingController.yourListings.isEmpty) {
-                return Text('You have not bought any property yet');
-              }
-              return Container(
-                height: 800.0, // Set a fixed height
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: _listingController.yourListings.length,
-                  itemBuilder: (context, index) {
-                    final yourListing = _listingController.yourListings[index];
-                    return Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            _controller.showListing(context, yourListing);
-                          },
-                          child: YourListing(
-                            listing: yourListing,
+
+            // Action Buttons
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Pause Payment',
+                        style: TextStyle(color: Colors.red)),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary),
+                    onPressed: () {},
+                    child: Text('Continue Payment',
+                        style: TextStyle(color: AppColors.light)),
+                  ),
+                ],
+              ),
+            ),
+
+            // Transaction History Heading
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Transaction History',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold)),
+                  TextButton(
+                    onPressed: () {
+                      // Get.to(() => TransactionHistoryPage());
+                    },
+                    child: Text('See More'),
+                  ),
+                ],
+              ),
+            ),
+
+            // Transaction List
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 5, // Replace with actual transaction count
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                        'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting2.jpeg?alt=media&token=6e19178c-cfba-42fb-958a-73fc1b342576'),
+                  ),
+                  title: Text('Old Amusement Park',
+                      style: Theme.of(context).textTheme.headlineSmall),
+                  subtitle: Text('Payment: Mrs Tosin'),
+                  trailing: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.check,
+                                color: Colors.white, size: 16),
                           ),
-                        ),
-                        Divider(), // Add a divider after each listing
-                      ],
-                    );
-                  },
-                ),
-              );
-            }),
+                          SizedBox(width: 5),
+                          Text('₦5M',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                        ],
+                      ),
+                      Text('Dec 27, 2025',
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

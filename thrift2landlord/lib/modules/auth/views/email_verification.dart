@@ -3,6 +3,8 @@ part of '../index.dart';
 class EmailVerificationScreen extends StatelessWidget {
   final AuthController _authController = Get.put(AuthController());
 
+  EmailVerificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

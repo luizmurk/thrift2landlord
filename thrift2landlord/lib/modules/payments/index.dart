@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:thrift2landlord/core/components/index.dart';
 import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
+import '../../core/routes/app_routes.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
-import '../../core/utils/custom_divider.dart';
-import '../../data/repositories/images.dart';
 import '../listings/index.dart';
+import '../properties/index.dart';
 
 part 'controllers/payments_controller.dart';
 part 'views/payments_screen.dart';
 part 'widgets/skeletons/payments_skeleton.dart';
 part 'widgets/your_listings.dart';
 part 'widgets/payment_history.dart';
-part 'widgets/listing.dart';
 part 'payments_bindings.dart';

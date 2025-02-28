@@ -6,11 +6,11 @@ class NumberTextField extends StatefulWidget {
   final String? Function(String?)? validator;
 
   const NumberTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   _NumberTextFieldState createState() => _NumberTextFieldState();
@@ -75,6 +75,8 @@ class CountryPickerBottomSheet extends StatelessWidget {
     {"name": "India", "code": "+91", "flag": "🇮🇳"},
     {"name": "Canada", "code": "+1", "flag": "🇨🇦"},
   ];
+
+  CountryPickerBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

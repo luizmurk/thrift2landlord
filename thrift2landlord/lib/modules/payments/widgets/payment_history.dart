@@ -7,12 +7,12 @@ class PaymentHistoryWidget extends StatelessWidget {
   final bool isComplete;
 
   const PaymentHistoryWidget({
-    Key? key,
+    super.key,
     required this.paymentHistory,
     required this.completionPercentage,
     required this.monthsLeft,
     required this.isComplete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +79,8 @@ class PaymentHistoryWidget extends StatelessWidget {
                     ),
                     title: Text(
                         '\$${payment.amount.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}'),
-                    subtitle: Text(
-                        '${payment.date.toLocal().toString().split(' ')[0]}'),
+                    subtitle:
+                        Text(payment.date.toLocal().toString().split(' ')[0]),
                     trailing: Text(payment.status.capitalizeFirst ?? ''),
                   );
                 },

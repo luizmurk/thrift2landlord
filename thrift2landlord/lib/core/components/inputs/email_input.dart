@@ -7,12 +7,12 @@ class EmailTextField extends StatelessWidget {
   final bool? isPrefixed;
 
   const EmailTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     this.isPrefixed = false,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

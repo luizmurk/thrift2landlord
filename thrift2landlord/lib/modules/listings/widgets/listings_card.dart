@@ -7,8 +7,8 @@ class ListingsCard extends StatelessWidget {
   const ListingsCard({
     required this.listing,
     this.isList = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,192 +1,258 @@
 part of '../index.dart';
 
 class ListingDetailsScreen extends StatefulWidget {
-  final ListingModel listing;
+  final ListingModel? listing;
 
-  const ListingDetailsScreen({Key? key, required this.listing})
-      : super(key: key);
+  const ListingDetailsScreen({super.key, this.listing});
 
   @override
   State<ListingDetailsScreen> createState() => _ListingDetailsScreenState();
 }
 
 class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
-  bool isImageExpanded = false;
+  late ListingModel listing;
+  String? selectedImage;
 
-  void toggleImageView() {
+  @override
+  void initState() {
+    super.initState();
+    listing = Get.arguments as ListingModel;
+  }
+
+  void showFullImage(String imageUrl) {
     setState(() {
-      isImageExpanded = !isImageExpanded;
+      selectedImage = imageUrl;
+    });
+  }
+
+  void closeFullImage() {
+    setState(() {
+      selectedImage = null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: Stack(
         children: [
-          // Image Section
-          GestureDetector(
-            onTap: toggleImageView,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              height: isImageExpanded ? Get.height * 0.8 : 250,
-              child: PageView.builder(
-                itemCount: widget.listing.imageUrls.length,
-                itemBuilder: (context, index) {
-                  return Image.network(
-                    widget.listing.imageUrls[index],
-                    fit: BoxFit.cover,
-                  );
-                },
-              ),
+          Positioned.fill(
+            child: Image.network(
+              listing.imageUrls.first,
+              fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: AppSizes.primaryGapHeight),
-
-          // Price & Basic Details
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSizes.primaryPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.listing.title,
-                    style: Theme.of(context).textTheme.headlineMedium),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                CustomDivider(thickness: AppSizes.primaryDividerThickness),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                Row(
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      NumberFormat.currency(symbol: "\$", decimalDigits: 2)
-                          .format(widget.listing.price),
-                      style: Theme.of(context).textTheme.headlineSmall,
+                    CircleAvatar(
+                      backgroundColor: Colors.black.withOpacity(0.5),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                          child: IconButton(
+                            icon: Icon(Icons.location_pin, color: Colors.white),
+                            onPressed: () {
+                              // Add your onPressed logic here
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        CircleAvatar(
+                          backgroundColor: Colors.black.withOpacity(0.5),
+                          child: IconButton(
+                            icon: Icon(Icons.favorite_border,
+                                color: Colors.white),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                Text(widget.listing.address,
-                    style: Theme.of(context).textTheme.titleMedium),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                Text("City: ${widget.listing.city} sq ft",
-                    style: Theme.of(context).textTheme.bodyMedium),
-                SizedBox(height: AppSizes.secondaryGapHeight),
-                Text("Category: ${widget.listing.categories.first.name}",
-                    style: Theme.of(context).textTheme.bodyMedium),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                CustomDivider(thickness: AppSizes.primaryDividerThickness),
-                SizedBox(height: AppSizes.primaryGapHeight),
-
-                // Map Section
-                // SizedBox(
-                //   height: 250,
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(AppSizes.primaryRadius),
-                //     child: GoogleMap(
-                //       initialCameraPosition: CameraPosition(
-                //         target: LatLng(widget.listing.location['lat']!,
-                //             widget.listing.location['lng']!),
-                //         zoom: 14,
-                //       ),
-                //       markers: {
-                //         Marker(
-                //           markerId: MarkerId(widget.listing.id),
-                //           position: LatLng(widget.listing.location['lat']!,
-                //               widget.listing.location['lng']!),
-                //           infoWindow: InfoWindow(title: widget.listing.title),
-                //         ),
-                //       },
-                //     ),
-                //   ),
-                // ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-
-                // Installment Availability
-                Row(
-                  children: [
-                    Icon(
-                        widget.listing.isInstallmentAvailable
-                            ? Icons.check_circle
-                            : Icons.cancel,
-                        color: Colors.green),
-                    SizedBox(width: AppSizes.secondaryGapWidth),
-                    Text(widget.listing.isInstallmentAvailable
-                        ? "Installment Available"
-                        : "One-time Payment Only"),
-                  ],
-                ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                if (widget.listing.isInstallmentAvailable)
-                  Row(
-                    children: [
-                      Icon(Icons.calendar_month, color: Colors.blue),
-                      SizedBox(width: AppSizes.secondaryGapWidth),
-                      Text("${widget.listing.installmentMonths} months plan"),
-                    ],
-                  ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-
-                // Realtor Information
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(ImageUrls.profilePlaceholder),
-                  ),
-                  title: Text("Gambert Young"),
-                  subtitle: Row(
-                    children: [
-                      Icon(Icons.star, color: Colors.amber),
-                      SizedBox(width: AppSizes.secondaryGapWidth),
-                      Text("4.5"),
-                    ],
-                  ),
-                ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                Text("Reviews", style: Theme.of(context).textTheme.labelLarge),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: widget.listing.reviews.length,
+              ),
+              listing.owner != null
+                  ? SizedBox(
+                      height: 130.h,
+                      child: Image.asset(
+                        'assets/images/sold.png',
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : SizedBox(),
+              Container(
+                margin: listing.owner == null
+                    ? EdgeInsets.only(top: 134.h)
+                    : EdgeInsets.only(top: 2.h),
+                height: 100.h,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listing.imageUrls.length,
                   itemBuilder: (context, index) {
-                    final review = widget.listing.reviews[index];
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(review.comment,
-                              style: Theme.of(context).textTheme.bodyMedium),
-                          SizedBox(width: AppSizes.secondaryGapHeight),
-                          Row(
-                            children: [
-                              Icon(Icons.star, color: Colors.amber),
-                              SizedBox(width: 4),
-                              Text(review.rating.toString(),
-                                  style: Theme.of(context).textTheme.bodySmall),
-                            ],
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () => showFullImage(listing.imageUrls[index]),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            listing.imageUrls[index],
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
                           ),
-                        ],
+                        ),
                       ),
                     );
                   },
                 ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-
-                CustomPrimaryButton(
-                  text: "Contact Realtor",
-                  onPressed: () {},
-                  isLoading: false,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 15.h),
+                  width: double.infinity,
+                  height: AppSizes.authImageHeight,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(AppSizes.primaryPadding),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(height: AppSizes.primaryGapHeight),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    constraints:
+                                        BoxConstraints(maxWidth: 200.0),
+                                    child: Text(
+                                      listing.title,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Text(
+                                    '${listing.city}, ${listing.country}',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Text(
+                                    '500sqm',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    height: 50.h,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: AppSizes.p8,
+                                      horizontal: AppSizes.p8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(
+                                          AppSizes.primaryRadius),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '₦${(listing.price / 1000000).toStringAsFixed(2)}M',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall
+                                            ?.copyWith(
+                                              color: AppColors.light,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: AppSizes.secondaryGapHeight),
+                                  Text(
+                                    '₦500k / ${listing.installmentMonths} months',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AppSizes.primaryGapHeight),
+                          Text(
+                            listing.description ?? "",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: Colors.black,
+                                ),
+                          ),
+                          SizedBox(height: AppSizes.primaryGapHeight),
+                          listing.owner == null
+                              ? CustomPrimaryButton(
+                                  text: 'Buy Land Now',
+                                  onPressed: () {
+                                    Get.toNamed(AppRoutes.payment_checkout,
+                                        arguments: listing);
+                                  },
+                                )
+                              : SizedBox(),
+                          SizedBox(height: AppSizes.primaryGapHeight),
+                          CustomSecondaryButton(
+                            text: 'See Land on Map',
+                            onPressed: () {
+                              // Add your onPressed logic here
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(height: AppSizes.primaryGapHeight),
-                CustomSecondaryButton(
-                  text: "Make Payment",
-                  onPressed: () {
-                    // Get.toNamed(AppRoutes.signIn);
-                  },
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+          if (selectedImage != null)
+            GestureDetector(
+              onTap: closeFullImage,
+              child: Container(
+                color: Colors.black.withOpacity(0.8),
+                child: Center(
+                  child: Image.network(
+                    selectedImage!,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

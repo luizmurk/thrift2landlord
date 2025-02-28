@@ -6,11 +6,11 @@ class CustomBottomSheet extends StatelessWidget {
   final double? height;
 
   const CustomBottomSheet({
-    Key? key,
+    super.key,
     required this.title,
     required this.child,
     this.height,
-  }) : super(key: key);
+  });
 
   static void show({
     required BuildContext context,
@@ -25,7 +25,7 @@ class CustomBottomSheet extends StatelessWidget {
       isScrollControlled: true,
       enableDrag: true, // Allows the bottom sheet to be draggable
       builder: (context) =>
-          CustomBottomSheet(title: title, child: child, height: height),
+          CustomBottomSheet(title: title, height: height, child: child),
     );
   }
 

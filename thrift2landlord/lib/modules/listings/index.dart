@@ -1,22 +1,24 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../core/components/index.dart';
 import '../../core/models/data/listings/category_model.dart';
 import '../../core/models/data/listings/document_model.dart';
+import '../../core/models/data/listings/installment_plan_model.dart';
+import '../../core/models/data/listings/location_model.dart';
 import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
 import '../../core/models/data/listings/review_model.dart';
 import '../../core/models/data/user_model.dart';
+import '../../core/routes/app_routes.dart';
 import '../../core/services/app_services.dart';
 import '../../core/services/shared_services.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
-import '../../core/utils/custom_divider.dart';
 import '../../data/repositories/images.dart';
 
 part './controllers/listings_controller.dart';

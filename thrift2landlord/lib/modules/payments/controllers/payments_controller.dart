@@ -4,11 +4,6 @@ class PaymentsController extends GetxController {
   var properties = [].obs;
   var isLoading = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void showListing(BuildContext context, ListingModel listing) {
     CustomBottomSheet.show(
         context: context,

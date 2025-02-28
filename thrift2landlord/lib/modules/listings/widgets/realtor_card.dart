@@ -11,8 +11,8 @@ class RealtorCard extends StatelessWidget {
     required this.name,
     required this.rating,
     required this.propertiesListed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

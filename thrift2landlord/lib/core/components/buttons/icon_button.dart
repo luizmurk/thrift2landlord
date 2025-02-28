@@ -8,13 +8,13 @@ class CustomIconButton extends StatelessWidget {
   final bool isOutlined; // Determines if it's outlined or filled
 
   const CustomIconButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.icon,
     this.color,
     this.size,
     this.isOutlined = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

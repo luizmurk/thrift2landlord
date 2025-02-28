@@ -6,8 +6,7 @@ class CustomTabBar extends StatelessWidget {
   final List<String> tabs;
   final TabController controller;
 
-  const CustomTabBar({Key? key, required this.tabs, required this.controller})
-      : super(key: key);
+  const CustomTabBar({super.key, required this.tabs, required this.controller});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ class OnboardingSlide extends StatelessWidget {
   final OnboardingController controller = Get.put(OnboardingController());
   final int index;
 
-  OnboardingSlide({required this.index, Key? key}) : super(key: key);
+  OnboardingSlide({required this.index, super.key});
 
   final List<String> images = [
     'assets/images/onboarding1.png',

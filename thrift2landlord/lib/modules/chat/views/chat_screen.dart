@@ -2,8 +2,9 @@ part of '../index.dart';
 
 class ChatScreen extends StatelessWidget {
   final ChatController _chatController = Get.put(ChatController());
-  final TextEditingController searchController =
-      TextEditingController(); // Add this
+  final TextEditingController searchController = TextEditingController();
+
+  ChatScreen({super.key}); // Add this
 
   @override
   Widget build(BuildContext context) {

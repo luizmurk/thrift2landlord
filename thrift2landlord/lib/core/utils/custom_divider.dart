@@ -12,12 +12,12 @@ class CustomDivider extends StatelessWidget {
   final Color? color;
 
   const CustomDivider({
-    Key? key,
+    super.key,
     this.thickness = 1.0, // Default thin divider
     this.horizontalPadding = 16.0, // Default horizontal padding
     this.verticalSpacing = 8.0, // Default spacing above & below
     this.color, // Defaults to AppColors.offWhite
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

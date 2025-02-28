@@ -10,12 +10,9 @@ import '../../core/components/others/custom_settings_tile.dart';
 import '../../core/models/data/user_model.dart';
 import '../../core/services/app_services.dart';
 import '../../core/services/shared_services.dart';
-import '../../core/services/listings_services.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../../core/themes/theme_controller.dart';
-import '../../core/utils/custom_divider.dart';
-import '../../core/utils/sample_form_screen.dart';
 
 part 'controllers/profile_controller.dart';
 part 'services/edit_profile.dart';

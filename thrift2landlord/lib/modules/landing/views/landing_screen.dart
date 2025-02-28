@@ -1,6 +1,8 @@
 part of '../index.dart';
 
 class LandingScreen extends StatefulWidget {
+  const LandingScreen({super.key});
+
   @override
   State<LandingScreen> createState() => _LandingScreenState();
 }
@@ -25,12 +27,16 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.file_copy_outlined),
-            onPressed: () {},
+            icon: Icon(Icons.file_open_outlined),
+            onPressed: () {
+              Get.toNamed(AppRoutes.documents);
+            },
           ),
           IconButton(
             icon: Icon(Icons.notifications_outlined),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.notifications);
+            },
           ),
         ],
       ),

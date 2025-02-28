@@ -63,7 +63,7 @@ class AuthService extends AppService {
         email: email,
         password: password,
       );
-      print("User created: ${userCredential}");
+      print("User created: $userCredential");
       final User? user = userCredential.user;
       if (user != null) {
         UserModel userModel = UserModel(

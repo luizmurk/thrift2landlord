@@ -7,16 +7,15 @@ class CategoryListingsModal extends StatelessWidget {
   final ListingsController controller = Get.find<ListingsController>();
 
   CategoryListingsModal(
-      {Key? key, this.categoryId, this.searchTerm, this.realtorId})
-      : super(key: key) {
+      {super.key, this.categoryId, this.searchTerm, this.realtorId}) {
     if (searchTerm != null) {
-      controller.searchListings(null, searchTerm, null);
+      controller.searchListings(null, searchTerm);
     } // call search controller not this
     if (categoryId != null) {
-      controller.searchListings(categoryId!, null, null);
+      controller.searchListings(categoryId!, null);
     }
     if (realtorId != null) {
-      controller.searchListings(null, null, realtorId);
+      controller.searchListings(null, null);
     }
   }
 

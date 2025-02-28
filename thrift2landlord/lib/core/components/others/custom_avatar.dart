@@ -9,11 +9,11 @@ class CustomAvatar extends StatelessWidget {
   final VoidCallback? onTap;
 
   const CustomAvatar({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.size = 50.0,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

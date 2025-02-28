@@ -8,13 +8,13 @@ class CustomPrimaryButton extends StatelessWidget {
   final IconData? icon;
 
   const CustomPrimaryButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.isDisabled = false,
     this.isLoading = false,
     this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

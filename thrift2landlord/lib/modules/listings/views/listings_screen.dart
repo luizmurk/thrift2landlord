@@ -1,6 +1,8 @@
 part of '../index.dart';
 
 class ListingsScreen extends StatefulWidget {
+  const ListingsScreen({super.key});
+
   @override
   _ListingsScreenState createState() => _ListingsScreenState();
 }
@@ -11,12 +13,12 @@ class _ListingsScreenState extends State<ListingsScreen> {
   final TextEditingController searchController = TextEditingController();
 
   String? selectedLocation;
-  final List<String> locations = ["Gwagwalada", "Apo", "Lugbe"];
+  final List<String> locations = ["Gwagwalada", "Apo", "Lugbe", "Wuse 3"];
 
   @override
   void initState() {
     super.initState();
-    controller.searchListings(null, null, null);
+    controller.searchListings(null, null);
   }
 
   @override
@@ -39,7 +41,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
               onChanged: (value) {
                 setState(() {
                   selectedLocation = value;
-                  controller.searchListings(null, null, null);
+                  controller.searchListings("city", value);
                 });
               },
               labelText: "Select Location",
@@ -55,11 +57,22 @@ class _ListingsScreenState extends State<ListingsScreen> {
             SizedBox(height: AppSizes.primaryGapHeight),
             CustomSearchBar(
               controller: searchController,
-              hintText: "Search properties...",
+              hintText: "Search property tag...",
               onSubmitted: (query) {
-                controller.searchListings(null, query, null);
+                controller.searchListings(
+                  "tags",
+                  query,
+                );
               }, // Show filter button
             ),
+            // ElevatedButton(
+            //   onPressed: controller.isLoading.value
+            //       ? null
+            //       : () => controller.addMockListing(),
+            //   child: Obx(() => controller.isLoading.value
+            //       ? CircularProgressIndicator()
+            //       : Text('Add Mock Listing')),
+            // ),
             SizedBox(height: AppSizes.primaryGapHeight),
             Obx(() {
               if (controller.isLoadingListingsFromSearch.value) {

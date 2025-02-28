@@ -9,13 +9,13 @@ class ListingsController extends GetxController {
   var yourListings = <ListingModel>[].obs;
   var listing = Rxn<ListingModel>();
   var listingOfTheDay = Rxn<ListingModel>();
-  var isLoading = true.obs;
-  var isLoadingListingsFromSearch = true.obs;
-  var isLoadingYourListings = true.obs;
-  var isLoadingCategories = true.obs;
-  var isLoadingListings = true.obs;
+  var isLoading = false.obs;
+  var isLoadingListingsFromSearch = false.obs;
+  var isLoadingYourListings = false.obs;
+  var isLoadingCategories = false.obs;
+  var isLoadingListings = false.obs;
   var isLoadingListingOfTheDay = true.obs;
-  var isLoadingRealtors = true.obs;
+  var isLoadingRealtors = false.obs;
   var hasError = false.obs;
   var hasErrorCategories = false.obs;
   var hasErrorListings = false.obs;
@@ -25,7 +25,7 @@ class ListingsController extends GetxController {
   var hasErrorRealtors = false.obs;
   var currentUser = Rxn<UserModel>();
 
-  ListingsController({bool isMock = true}) {
+  ListingsController({bool isMock = false}) {
     _service.isMock = isMock;
   }
 
@@ -42,38 +42,30 @@ class ListingsController extends GetxController {
     }
   }
 
-  Future<void> fetchCategories() async {
-    try {
-      isLoadingCategories(true);
-      hasErrorCategories(false);
-      categories.value = await _service.fetchCategories();
-    } catch (e) {
-      hasErrorCategories(true);
-    } finally {
-      isLoadingCategories(false);
-    }
-  }
-
-  Future<void> getYourListings() async {
-    try {
-      isLoadingYourListings(true);
-      hasErrorLoadingYourListings(false);
-      yourListings.value =
-          await _service.fetchYourListings(currentUser.value!.id);
-    } catch (e) {
-      hasErrorLoadingYourListings(true);
-    } finally {
-      isLoadingYourListings(false);
-    }
-  }
+  // Future<void> getYourListings() async {
+  //   try {
+  //     isLoadingYourListings(true);
+  //     hasErrorLoadingYourListings(false);
+  //     yourListings.value =
+  //         await _service.fetchYourListings(currentUser.value!.id);
+  //   } catch (e) {
+  //     hasErrorLoadingYourListings(true);
+  //   } finally {
+  //     isLoadingYourListings(false);
+  //   }
+  // }
 
   Future<void> searchListings(
-      String? categoryId, String? query, String? realtorId) async {
+    String? field,
+    String? query,
+  ) async {
     try {
       isLoadingListingsFromSearch(true);
       hasErrorListingsFromSearch(false);
-      listingsFromSearch.value =
-          await _service.searchListings(categoryId, query, realtorId);
+      listingsFromSearch.value = await _service.searchListings(
+        field,
+        query,
+      );
     } catch (e) {
       hasErrorListingsFromSearch(true);
     } finally {
@@ -94,22 +86,7 @@ class ListingsController extends GetxController {
   }
 
   void showListing(BuildContext context, ListingModel listing) {
-    CustomBottomSheet.show(
-        context: context,
-        title: 'Listing',
-        child: ListingDetailsScreen(listing: listing));
-  }
-
-  Future<void> getListingOfTheDay() async {
-    try {
-      isLoadingListingOfTheDay(true);
-      hasErrorListingOfTheDay(false);
-      listingOfTheDay.value = await _service.fetchListingOfTheDay();
-    } catch (e) {
-      hasErrorListingOfTheDay(true);
-    } finally {
-      isLoadingListingOfTheDay(false);
-    }
+    Get.toNamed(AppRoutes.listing, arguments: listing);
   }
 
   Future<void> fetchListings() async {
@@ -124,18 +101,6 @@ class ListingsController extends GetxController {
     }
   }
 
-  Future<void> fetchRealtors() async {
-    try {
-      isLoadingRealtors(true);
-      hasErrorRealtors(false);
-      realtors.value = await _service.fetchRealtors();
-    } catch (e) {
-      hasErrorRealtors(true);
-    } finally {
-      isLoadingRealtors(false);
-    }
-  }
-
   Future<void> fetchListing(String id) async {
     try {
       isLoading(true);
@@ -145,6 +110,18 @@ class ListingsController extends GetxController {
       hasError(true);
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future<void> addMockListing() async {
+    try {
+      isLoading.value = true;
+      await _service.addMockListingToFirebase();
+      Get.snackbar('Success', 'Mock listing added to Firebase!');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to add mock listing: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }

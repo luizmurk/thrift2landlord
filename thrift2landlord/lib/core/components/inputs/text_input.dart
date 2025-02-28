@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
   final bool? isPrefixed;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.isPrefixed = false,
     this.maxLength,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

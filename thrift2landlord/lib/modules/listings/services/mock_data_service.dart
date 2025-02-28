@@ -3,13 +3,13 @@ part of '../index.dart';
 class MockDataService {
   static Random random = Random();
   static final List<String> imageUrlsBucket = [
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting2.jpeg?alt=media&token=6e19178c-cfba-42fb-958a-73fc1b342576',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting1.jpeg?alt=media&token=925d9263-ca4a-496f-b2d2-90f2d074fab3',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting3.jpeg?alt=media&token=0483ca00-c854-4021-8082-8ba4f936186b',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting4.jpeg?alt=media&token=279348c0-7180-4ac4-bf76-57520f00facb',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting5.jpeg?alt=media&token=ba333e7a-2a44-49fb-add5-fda9c5bfb5dd',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting6.jpeg?alt=media&token=572ac8b1-184b-4553-809b-e11bc62e1ace',
-    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting7.jpeg?alt=media&token=f8095cf6-a044-4169-8c9d-de4c385a7eaf',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland1.webp?alt=media&token=5b1caea4-407e-43dd-ad02-ac2c85b21d78',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland2.jpg?alt=media&token=7c98b6d4-19f5-4a1f-888f-bff9fdf9798b',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland3.jpg?alt=media&token=96a065c5-07d0-414d-a749-62bed0c075bd',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland4.jpg?alt=media&token=cc41ded0-5896-445e-8968-2936111a5cdc',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland5.jpg?alt=media&token=8de8ddc0-8edb-4e7d-ac39-c11e94a729ce',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland6.jpg?alt=media&token=ec7d9c0f-e3c7-4cd1-8357-de4f9ad30e93',
+    'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/laa%2Fland7.jpg?alt=media&token=7af32933-d675-4a20-9a80-cd2199d6224e',
   ];
 
   static final List<String> realtorImages = [
@@ -62,14 +62,18 @@ class MockDataService {
         10,
         (index) => ListingModel(
               id: '$index',
-              title: 'Beautiful House in City $index',
-              location: {'lat': 37.7749, 'lng': -122.4194},
-              state: 'State $index',
-              country: 'Country $index',
-              city: 'City $index',
+              title: 'Amusement park land, old $index',
+              location: LocationModel(lat: 37.7749, lng: -122.4194),
+              description:
+                  'This land is just 10 mins from the University of Abuja, 15 mins from Gwagwalada Teaching Hospital, and 25 mins from the airport. Enjoy a good road network, 24/7 security, and reliable electricity & water supply.\nThe area is safe, peaceful, and rapidly developing with great investment potential.\nPhysical & virtual site inspections are available for your convenience.\n🎉 Special Offer: Get a Free Deed of Assignment when you pay in full! \n C of O (Certificate of Occupancy)',
+              state: 'Abuja',
+              country: 'Nigeria',
+              city: 'Wuse $index',
               address: '123 Main St, City $index',
               price: 50000 + (index * 1000),
-              owner: 'owner_$index',
+              owner: null,
+              ownershipType: 'Freehold',
+              landStatus: 'Dry Land, Ready for Construction',
               imageUrls: List.generate(
                   7,
                   (i) =>
@@ -93,8 +97,10 @@ class MockDataService {
               ],
               isInstallmentAvailable: true,
               installmentMonths: 10,
-              installmentPlan:
-                  List.generate(10, (i) => {'month': i + 1, 'amount': 5000}),
+              installmentPlan: InstallmentPlanModel(
+                  monthlyPaymentDate: DateTime.now(),
+                  amount: 5000,
+                  timeFrame: 10),
               totalPaidAmount: 0,
               isFullyPaid: false,
               buyerId: null,
@@ -109,14 +115,18 @@ class MockDataService {
         10,
         (index) => ListingModel(
               id: '$index',
-              title: 'Your Beautiful House in City $index',
-              location: {'lat': 37.7749, 'lng': -122.4194},
-              state: 'State $index',
-              country: 'Country $index',
-              city: 'City $index',
+              title: 'Old Takers Land $index',
+              location: LocationModel(lat: 37.7749, lng: -122.4194),
+              description:
+                  'This land is just 10 mins from the University of Abuja, 15 mins from Gwagwalada Teaching Hospital, and 25 mins from the airport. Enjoy a good road network, 24/7 security, and reliable electricity & water supply.\nThe area is safe, peaceful, and rapidly developing with great investment potential.\nPhysical & virtual site inspections are available for your convenience.\n🎉 Special Offer: Get a Free Deed of Assignment when you pay in full! \n C of O (Certificate of Occupancy)',
+              state: 'Abuja',
+              country: 'Nigeria',
+              city: 'Wuse $index',
               address: '123 Main St, City $index',
               price: 50000 + (index * 1000),
-              owner: 'owner_$index',
+              owner: 'owner_',
+              ownershipType: 'Freehold',
+              landStatus: 'Dry Land, Ready for Construction',
               imageUrls: List.generate(
                   7,
                   (i) =>
@@ -140,9 +150,11 @@ class MockDataService {
               ],
               isInstallmentAvailable: true,
               installmentMonths: 10,
-              installmentPlan:
-                  List.generate(10, (i) => {'month': i + 1, 'amount': 5000}),
-              totalPaidAmount: 0,
+              installmentPlan: InstallmentPlanModel(
+                  monthlyPaymentDate: DateTime.now(),
+                  amount: 5000,
+                  timeFrame: 10),
+              totalPaidAmount: 4000 * (index.isEven ? 1 : 0),
               isFullyPaid: false,
               buyerId: null,
               paymentHistory: demoPaymentHistory,

@@ -1,6 +1,8 @@
 part of '../index.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -34,12 +36,18 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
-          child: Image.asset(
-            isDarkMode
-                ? 'assets/images/logo_dark.jpeg'
-                : 'assets/images/logo_light.jpeg',
-            width: AppSizes.logoWidthSplash,
-            height: AppSizes.logoHeightSplash,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                isDarkMode
+                    ? 'assets/images/transparent_logo.png'
+                    : 'assets/images/transparent_logo.png',
+                width: 150.w,
+                height: 150.h,
+              ),
+              Text('First step to becoming A Landlord')
+            ],
           ),
         ),
       ),

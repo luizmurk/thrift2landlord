@@ -20,3 +20,4 @@ part 'widgets/skeletons/properties_skeleton.dart';
 part 'properties_bindings.dart';
 part 'services/properties_service.dart';
 part 'widgets/property.dart';
+part 'widgets/property_payment.dart';

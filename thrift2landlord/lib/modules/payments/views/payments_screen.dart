@@ -17,7 +17,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   @override
   void initState() {
     super.initState();
-    propertiesController.fetchProperties();
+    // propertiesController.fetchProperties();
   }
 
   @override
@@ -60,13 +60,19 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                   ));
                 }
                 return SizedBox(
-                  height: 180,
+                  width: 380.w,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: propertiesController.properties.length,
                     itemBuilder: (context, index) {
-                      return PropertyCard(
-                          listing: propertiesController.properties[index]);
+                      return GestureDetector(
+                        onTap: () {
+                          _listingController.showListing(
+                              context, propertiesController.properties[index]);
+                        },
+                        child: PropertyPaymentCard(
+                            listing: propertiesController.properties[index]),
+                      );
                     },
                   ),
                 );

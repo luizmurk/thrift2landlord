@@ -66,6 +66,10 @@ class AppPages {
       page: () => CompletionStatePage(),
     ),
     GetPage(
+      name: AppRoutes.map,
+      page: () => MapScreen(),
+    ),
+    GetPage(
       name: AppRoutes.documents,
       page: () => DocumentsPage(),
     ),

@@ -4,14 +4,14 @@ class EmptyCMPState extends StatelessWidget {
   final String title;
   final String body;
   final String buttonText;
-  final VoidCallback onButtonPressed;
+  final VoidCallback? onButtonPressed;
 
   const EmptyCMPState({
     super.key,
     required this.title,
     required this.body,
     required this.buttonText,
-    required this.onButtonPressed,
+    this.onButtonPressed,
   });
 
   @override
@@ -36,10 +36,10 @@ class EmptyCMPState extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            CustomPrimaryButton(
-              text: buttonText,
-              onPressed: onButtonPressed,
-            ),
+            onButtonPressed != null
+                ? CustomPrimaryButton(
+                    text: buttonText, onPressed: onButtonPressed ?? () {})
+                : SizedBox(),
           ],
         ),
       ),

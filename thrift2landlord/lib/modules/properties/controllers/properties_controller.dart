@@ -14,7 +14,9 @@ class PropertiesController extends GetxController {
 
   @override
   void onInit() {
-    checkLoggedInUser();
+    checkLoggedInUser().then((onValue) {
+      fetchProperties();
+    });
     super.onInit();
   }
 

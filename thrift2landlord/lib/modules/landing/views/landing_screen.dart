@@ -57,7 +57,16 @@ class _LandingScreenState extends State<LandingScreen> {
                   } else if (controller.hasErrorListings.value) {
                     return Text('Failed to load listing of the day');
                   } else if (controller.listings.isEmpty) {
-                    return Text('No listing of the day yet');
+                    return Center(
+                        child: EmptyCMPState(
+                      title: '🚫 No Properties Yet!',
+                      body:
+                          'Explore available lands and make your first purchase today.',
+                      buttonText: 'Find Properties Now',
+                      onButtonPressed: () {
+                        Get.toNamed(AppRoutes.listings);
+                      },
+                    ));
                   }
                   return SizedBox(
                     height: AppSizes.listingCardHeight,

@@ -80,7 +80,13 @@ class _ListingsScreenState extends State<ListingsScreen> {
               } else if (controller.hasErrorListingsFromSearch.value) {
                 return Text('Failed to load listing of the day');
               } else if (controller.listingsFromSearch.isEmpty) {
-                return Text('No listing of the day yet');
+                return Center(
+                    child: EmptyCMPState(
+                  title: '🚫 No Results Found',
+                  body:
+                      'Explore available lands and make your first purchase today.',
+                  buttonText: 'Find Properties Now',
+                ));
               }
               return SizedBox(
                 height: 1000.h,

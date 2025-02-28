@@ -216,9 +216,11 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                 ),
                           ),
                           SizedBox(height: AppSizes.primaryGapHeight),
-                          listing.owner == null
+                          !listing.isFullyPaid
                               ? CustomPrimaryButton(
-                                  text: 'Buy Land Now',
+                                  text: listing.isFullyPaid
+                                      ? 'Buy Land Now'
+                                      : 'Continue Payment',
                                   onPressed: () {
                                     Get.toNamed(AppRoutes.payment_checkout,
                                         arguments: listing);
@@ -229,7 +231,8 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                           CustomSecondaryButton(
                             text: 'See Land on Map',
                             onPressed: () {
-                              // Add your onPressed logic here
+                              Get.toNamed(AppRoutes.map,
+                                  arguments: listing.location);
                             },
                           ),
                         ],

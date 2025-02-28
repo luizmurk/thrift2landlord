@@ -80,26 +80,26 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             ),
 
             // Action Buttons
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('Pause Payment',
-                        style: TextStyle(color: Colors.red)),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary),
-                    onPressed: () {},
-                    child: Text('Continue Payment',
-                        style: TextStyle(color: AppColors.light)),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       TextButton(
+            //         onPressed: () {},
+            //         child: Text('Pause Payment',
+            //             style: TextStyle(color: Colors.red)),
+            //       ),
+            //       ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor: AppColors.primary),
+            //         onPressed: () {},
+            //         child: Text('Continue Payment',
+            //             style: TextStyle(color: AppColors.light)),
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
             // Transaction History Heading
             Padding(
@@ -112,31 +112,34 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           .textTheme
                           .headlineSmall!
                           .copyWith(fontWeight: FontWeight.bold)),
-                  TextButton(
-                    onPressed: () {
-                      // Get.to(() => TransactionHistoryPage());
-                    },
-                    child: Text('See More'),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     // Get.to(() => TransactionHistoryPage());
+                  //   },
+                  //   child: Text('See More'),
+                  // ),
                 ],
               ),
             ),
 
             // Transaction List
+
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: 5, // Replace with actual transaction count
+              itemCount: propertiesController.getPayments().length,
               itemBuilder: (context, index) {
+                PaymentModel payment =
+                    propertiesController.getPayments()[index];
                 return ListTile(
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                         'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting2.jpeg?alt=media&token=6e19178c-cfba-42fb-958a-73fc1b342576'),
                   ),
-                  title: Text('Old Amusement Park',
+                  title: Text('Payment ID: ${payment.paymentId}',
                       style: Theme.of(context).textTheme.headlineSmall),
-                  subtitle: Text('Payment: Mrs Tosin'),
+                  subtitle: Text('Status: ${payment.status}'),
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -146,24 +149,31 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: payment.status == 'completed'
+                                  ? Colors.green
+                                  : Colors.red,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.check,
-                                color: Colors.white, size: 16),
+                            child: Icon(
+                              payment.status == 'completed'
+                                  ? Icons.check
+                                  : Icons.close,
+                              color: Colors.white,
+                              size: 16,
+                            ),
                           ),
                           SizedBox(width: 5),
-                          Text('₦5M',
+                          Text('₦${payment.amount}',
                               style: Theme.of(context).textTheme.headlineSmall),
                         ],
                       ),
-                      Text('Dec 27, 2025',
+                      Text('${payment.date.toLocal()}'.split(' ')[0],
                           style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 );
               },
-            ),
+            )
           ],
         ),
       ),

@@ -27,6 +27,12 @@ class PropertiesController extends GetxController {
     }
   }
 
+  List<PaymentModel> getPayments() {
+    List<PaymentModel> allPayments =
+        properties.expand((property) => property.paymentHistory).toList();
+    return allPayments;
+  }
+
   void showListing(BuildContext context, ListingModel listing) {
     Get.toNamed(AppRoutes.listing, arguments: listing);
   }

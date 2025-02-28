@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:thrift2landlord/core/components/index.dart';
 
+import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
 import '../../core/models/data/user_model.dart';
 import '../../core/routes/app_routes.dart';

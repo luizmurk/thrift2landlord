@@ -65,7 +65,8 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                           child: IconButton(
                             icon: Icon(Icons.location_pin, color: Colors.white),
                             onPressed: () {
-                              // Add your onPressed logic here
+                              Get.toNamed(AppRoutes.map,
+                                  arguments: listing.location);
                             },
                           ),
                         ),
@@ -216,17 +217,23 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                 ),
                           ),
                           SizedBox(height: AppSizes.primaryGapHeight),
-                          !listing.isFullyPaid
+                          listing.owner != null
                               ? CustomPrimaryButton(
                                   text: listing.isFullyPaid
-                                      ? 'Buy Land Now'
+                                      ? 'PAID IN FULL'
                                       : 'Continue Payment',
                                   onPressed: () {
                                     Get.toNamed(AppRoutes.payment_checkout,
                                         arguments: listing);
                                   },
                                 )
-                              : SizedBox(),
+                              : CustomPrimaryButton(
+                                  text: 'Buy Land Now',
+                                  onPressed: () {
+                                    Get.toNamed(AppRoutes.payment_checkout,
+                                        arguments: listing);
+                                  },
+                                ),
                           SizedBox(height: AppSizes.primaryGapHeight),
                           CustomSecondaryButton(
                             text: 'See Land on Map',

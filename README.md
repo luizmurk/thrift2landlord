@@ -1,5 +1,55 @@
 # thrift2landlord
 
-TODO:
+TECH DEBT:
 1. Searching service is case sensitive for location search and tags
 2. Location list dropdown should feed of the database
+3. Transaction History is not fully tested but it is expected to use properties list with a logic to display all your transaction history
+4. Because of what we have above properties in the properties controller must be a stream and fetched in realtime
+
+
+
+HOW PAYMENT SHOW WORK:
+step 1: User finds a property and user clicks on buy land.
+step 2: User can decide how he wants the payment installment to be structured in the next page.
+
+USER PAYING 1 TIME:
+step 3: If user opts to make payment once them he stays on the one time payment tab and use either of the methods to make his payment.
+
+step 4: On completion of one time payment form with paystack the listing model fields for buyerID and Owner ID will be updated to the UserID a payment history object will be added to the list of payments via the paymentHistory field (the paymentID will be the transaction id on that payment) from the flutter app to firebase.
+
+step 5: immediately after the the app provides the checkout from paystack the fields above on this listing will be updated from the flutter app to firebase.
+
+step 6: If paystack returns a failed callback of any sort to the cloud function endpoint the particular payment history previously created above will be removed as well as all other field via checking the transaction ID sent to the callback with the payment ID and the installmentMonths (if installment month is null then it is scheduled for 1 time) on any listing that has that payment ID in its payment history.
+
+step 7: If paystack return a success callback to the cloud function endpoint all previously updated fields remain the same and the cloud function will do the following:
+    1. get the totalPaidAmount on that listing which has a payment history with the payment id same as the transaction id add it to the amount paid now and update the totalPaidAmount on that listing with the new amount and the transaction history completionStatus should be updated to true.
+    2. Proceed to make another check, if the new totalPaidAmount is the exact same thing as the price for the listing then the isFullyPaid flag should be updated to true then send a congratulatory email.
+
+
+USER PAYING IN INSTALLMENTS:
+step 3: If user opts to make payment in installments then he stays on the installmental payment tab and use either of the methods to make his payment.
+
+step 4: The user will procced to fill in his installment plan data and on completion of that form  with paystack the listing model fields for buyerID and Owner ID will be updated to the UserID a payment history object will be added to the list of payments via the paymentHistory field (the paymentID will be the transaction id on that payment) from the flutter app to firebase also the installmentPaymentPlan field will be updated with the installment plan he has choosen and lastly the instalment plan month will be updated with the months he has chosen.
+
+step 5: immediately after the the app provides the checkout from paystack the fields above on this listing will be updated from the flutter app to firebase.
+
+step 6: If paystack returns a failed callback of any sort to the cloud function endpoint the particular payment history previously created above will be removed as well as all other field via checking the transaction ID sent to the callback with the payment ID and the installmentMonths (if installment month is null then it is scheduled for 1 time) on any listing that has that payment ID in its payment history.
+
+step 7: If paystack return a success callback to the cloud function endpoint all previously updated fields remain the same and the cloud function will do the following:
+    1. get the totalPaidAmount on that listing which has a payment history with the payment id same as the transaction id add it to the amount paid now and update the totalPaidAmount on that listing with the new amount and the transaction history completionStatus should be updated to true.
+    2. Proceed to make another check, if the new totalPaidAmount is the exact same thing as the price for the listing then the isFullyPaid flag should be updated to true if not isFullyPaid stays the same then send a congratulatory email.
+
+
+
+USER CONTINUES INSTALLMENT PAYMENT:
+step 3: If user clicks "continue payment" button via instalmemtal payment.
+
+step 4: The user will procced to paystack a payment history object will be added to the list of payments via the paymentHistory field (the paymentID will be the transaction id on that payment) from the flutter app to firebase.
+
+step 5: immediately after the the app provides the checkout from paystack the fields above on this listing will be updated from the flutter app to firebase.
+
+step 6: If paystack returns a failed callback of any sort to the cloud function endpoint the particular payment history previously created above will be removed as well as all other field via checking the transaction ID sent to the callback with the payment ID.
+
+step 7: If paystack return a success callback to the cloud function endpoint all previously updated fields remain the same and the cloud function will do the following:
+    1. get the totalPaidAmount on that listing which has a payment history with the payment id same as the transaction id add it to the amount paid now and update the totalPaidAmount on that listing with the new amount and the transaction history completionStatus should be updated to true.
+    2. Proceed to make another check, if the new totalPaidAmount is the exact same thing as the price for the listing then the isFullyPaid flag should be updated to true if not isFullyPaid stays the same then send a congratulatory email.

@@ -3,6 +3,7 @@ class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String listings = '/listings';
   static const String map = '/map';
+  static const String kyc = '/kyc';
   static const String documents = '/documents';
   static const String notifications = '/notifications';
   static const String listing = '/listing';

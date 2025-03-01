@@ -8,6 +8,7 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final String? photoUrl;
+  final bool? isVerified;
   final String? role;
   final DateTime? createdAt;
   final int? rating;
@@ -20,6 +21,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     this.photoUrl,
+    this.isVerified,
     this.role,
     this.createdAt,
     this.rating,
@@ -35,6 +37,7 @@ class UserModel {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       photoUrl: map['photoUrl'],
+      isVerified: map['isVerified'] ?? false,
       role: map['role'] ?? 'user',
       createdAt: DateTime.now(),
       rating: 0,
@@ -51,6 +54,7 @@ class UserModel {
       'email': email,
       'phoneNumber': phoneNumber,
       'photoUrl': photoUrl,
+      'isVerified': isVerified ?? false,
       'role': role,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : null,
       'rating': rating ?? 0,

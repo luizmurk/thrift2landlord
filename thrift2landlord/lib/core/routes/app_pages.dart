@@ -5,6 +5,7 @@ import 'package:thrift2landlord/modules/notifications/index.dart';
 import '../../modules/auth/index.dart';
 import '../../modules/chat/index.dart';
 import '../../modules/home/index.dart';
+import '../../modules/kyc/index.dart';
 import '../../modules/listings/index.dart';
 import '../../modules/onboarding/index.dart';
 import '../../modules/payment_checkout/index.dart';
@@ -64,6 +65,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.completion,
       page: () => CompletionStatePage(),
+    ),
+    GetPage(
+      name: AppRoutes.kyc,
+      page: () => KYCForm(),
     ),
     GetPage(
       name: AppRoutes.map,

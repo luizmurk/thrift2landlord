@@ -17,34 +17,37 @@ class CompletionStatePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/congrats_image.png',
-              width: 150, // Adjust size as needed
-              height: 150,
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: AppSizes.secondaryGapHeight),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.labelMedium,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: AppSizes.secondaryGapHeight),
-            Text(
-              body,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: AppSizes.primaryGapHeight),
-            CustomPrimaryButton(
-              text: buttonText,
-              onPressed: onPressed,
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(AppSizes.primaryPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/congrats_image.png',
+                width: 150, // Adjust size as needed
+                height: 150,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(height: AppSizes.secondaryGapHeight),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.labelMedium,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppSizes.secondaryGapHeight),
+              Text(
+                body,
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppSizes.primaryGapHeight),
+              CustomPrimaryButton(
+                text: buttonText,
+                onPressed: onPressed,
+              ),
+            ],
+          ),
         ),
       ),
     );

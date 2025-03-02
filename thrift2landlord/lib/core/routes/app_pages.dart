@@ -4,6 +4,7 @@ import 'package:thrift2landlord/modules/landing/index.dart';
 import 'package:thrift2landlord/modules/notifications/index.dart';
 import '../../modules/auth/index.dart';
 import '../../modules/chat/index.dart';
+import '../../modules/help_and_support/index.dart';
 import '../../modules/home/index.dart';
 import '../../modules/kyc/index.dart';
 import '../../modules/listings/index.dart';
@@ -97,13 +98,17 @@ class AppPages {
       page: () => PaymentCheckoutScreen(),
     ),
     GetPage(
+      name: AppRoutes.termsAndConditions,
+      page: () => TermsAndConditionScreen(),
+    ),
+    GetPage(
       name: AppRoutes.profile,
       page: () => ProfileScreen(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: AppRoutes.chat,
-      page: () => ChatScreen(),
+      page: () => MessagePage(),
     ),
     //   GetPage(
     //   name: AppRoutes.splash,

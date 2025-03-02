@@ -33,7 +33,9 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.chat),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.chat);
+            },
           ),
           IconButton(
             icon: Icon(Icons.house_outlined),

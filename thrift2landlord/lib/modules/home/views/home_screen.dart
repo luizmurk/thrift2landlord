@@ -57,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen>
 
           // KYC Banner (Only shows if user is NOT verified)
           Obx(() {
-            if (controller.userModel.value?.isVerified == false) {
+            if (controller.userModel.value?.isVerified == false &&
+                controller.isLoading.value == false) {
               return KYCBanner();
             }
             return SizedBox.shrink();
@@ -143,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen>
             _buildNavItem(Icons.payment, "Payments", 3),
             BottomNavigationBarItem(
               icon: CustomAvatar(
-                imageUrl: ImageUrls.profilePlaceholder,
+                imageUrl: controller.userModel.value?.photoUrl ??
+                    'https://via.placeholder.com/150',
                 size: AppSizes.bigIcon,
               ),
               label: 'Profile',

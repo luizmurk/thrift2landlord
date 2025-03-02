@@ -29,14 +29,14 @@ class _LandingScreenState extends State<LandingScreen> {
           IconButton(
             icon: Icon(Icons.file_open_outlined),
             onPressed: () {
-              Get.toNamed(AppRoutes.kyc);
-              //Get.toNamed(AppRoutes.documents);
+              // Get.toNamed(AppRoutes.kyc);
+              Get.toNamed(AppRoutes.documents);
             },
           ),
           IconButton(
             icon: Icon(Icons.notifications_outlined),
             onPressed: () {
-              Get.toNamed(AppRoutes.kyc);
+              Get.toNamed(AppRoutes.notifications);
             },
           ),
         ],

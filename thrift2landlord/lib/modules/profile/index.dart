@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +21,7 @@ part 'controllers/profile_controller.dart';
 part 'services/edit_profile.dart';
 part 'controllers/edit_profile.dart';
 part 'views/profile_screen.dart';
+part 'views/terms_and_conditions.dart';
 part 'widgets/skeletons/profile_skeleton.dart';
 part 'widgets/edit_profile_form.dart';
 part 'profile_bindings.dart';

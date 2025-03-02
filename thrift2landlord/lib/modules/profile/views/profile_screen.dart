@@ -23,7 +23,8 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomAvatar(
-                        imageUrl: 'https://via.placeholder.com/150',
+                        imageUrl: _controller.currentUser.value?.photoUrl ??
+                            'https://via.placeholder.com/150',
                         size: 80,
                         onTap: () {},
                       ),

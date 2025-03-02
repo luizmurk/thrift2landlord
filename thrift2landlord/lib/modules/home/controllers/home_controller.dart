@@ -9,11 +9,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadProperties();
     checkLoggedInUser().then((onValue) => {fetchUserData()});
   }
 
   Future<void> checkLoggedInUser() async {
+    isLoading.value = true;
     UserModel? storedUser = await SharedService.getUserFromStorage();
     if (storedUser != null) {
       userModel.value = storedUser; // Navigate to Home Screen
@@ -30,14 +30,10 @@ class HomeController extends GetxController {
         userModel.value =
             UserModel.fromMap(userDoc.data() as Map<String, dynamic>, userId);
       }
+      isLoading.value = false;
     } catch (e) {
       print("Error fetching user data: $e");
+      isLoading.value = false;
     }
-  }
-
-  void loadProperties() async {
-    isLoading.value = true;
-    // properties.value = await ListingsService.fetchProperties();
-    isLoading.value = false;
   }
 }

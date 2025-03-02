@@ -6,6 +6,8 @@ class EditProfileController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   var currentUser = Rxn<UserModel>();
+  var isLoading = false.obs;
+  var profileImage = Rxn<String>();
 
   @override
   void onInit() {
@@ -13,26 +15,49 @@ class EditProfileController extends GetxController {
     setUser();
   }
 
-  var isLoading = false.obs;
-  var profileImage = Rxn<String>();
-
-  void pickProfileImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      profileImage.value = pickedFile.path;
-    }
-  }
-
   Future<void> setUser() async {
     UserModel? storedUser = await SharedService.getUserFromStorage();
     if (storedUser != null) {
-      currentUser.value = storedUser; // Navigate to Home Screen
+      currentUser.value = storedUser;
+      nameController.text = storedUser.name;
+      emailController.text = storedUser.email;
+      phoneController.text = storedUser.phoneNumber;
+      profileImage.value = storedUser.photoUrl;
     }
   }
 
-  void updateProfile(String userId) async {
-    if (nameController.text.isEmpty || emailController.text.isEmpty) {
+  Future<void> pickProfileImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      isLoading.value = true;
+      try {
+        String downloadUrl = await _uploadImage(File(pickedFile.path));
+        profileImage.value = downloadUrl;
+        updateProfile(currentUser.value!.id, isImageOnly: true);
+      } catch (e) {
+        Get.snackbar('Error', 'Failed to upload image');
+      } finally {
+        isLoading.value = false;
+      }
+    }
+  }
+
+  Future<String> _uploadImage(File imageFile) async {
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('profile_images/${currentUser.value!.id}.jpg');
+      await ref.putFile(imageFile);
+      return await ref.getDownloadURL();
+    } catch (e) {
+      throw Exception('Failed to upload image');
+    }
+  }
+
+  void updateProfile(String userId, {bool isImageOnly = false}) async {
+    if (!isImageOnly &&
+        (nameController.text.isEmpty || emailController.text.isEmpty)) {
       Get.snackbar('Error', 'Name and Email are required');
       return;
     }
@@ -46,6 +71,7 @@ class EditProfileController extends GetxController {
         phone: phoneController.text,
         photoUrl: profileImage.value,
       );
+
       setUser();
       Get.back();
       Get.snackbar('Success', 'Profile updated successfully');
@@ -60,7 +86,7 @@ class EditProfileController extends GetxController {
     final controller = Get.put(EditProfileController());
     controller.nameController.text = user.name;
     controller.emailController.text = user.email;
-    controller.phoneController.text = '';
+    controller.phoneController.text = user.phoneNumber;
     controller.profileImage.value = user.photoUrl;
 
     CustomBottomSheet.show(

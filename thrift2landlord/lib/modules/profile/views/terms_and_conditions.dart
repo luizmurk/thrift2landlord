@@ -5,7 +5,10 @@ class TermsAndConditionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terms and Conditions'),
+        title: Text(
+          "Terms and Conditions",
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(AppSizes.primaryPadding),

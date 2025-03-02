@@ -79,40 +79,42 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.edit,
+                  iconPath: 'assets/icons/edit.svg', // Use an SVG icon
                   title: "Edit Profile",
                   onTap: () {
                     _controller.showEditProfileBottomSheet(
                         context, _controller.currentUser.value!);
                   },
                 ),
+
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.notifications,
+                  iconPath: 'assets/icons/notification.svg', // Use an SVG icon
                   title: "Notifications",
                   hasSwitch: true,
                   switchValue: true,
                   onSwitchChanged: (value) {},
                 ),
+
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.help,
+                  iconPath: 'assets/icons/key.svg', // Use an SVG icon
                   title: "Change Password",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.changePassword);
+                  },
                 ),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.mail,
+                  iconPath: 'assets/icons/feedback.svg', // Use an SVG icon
                   title: "Feedbacks",
                   onTap: () {},
                 ),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.help,
+                  iconPath: 'assets/icons/shield.svg', // Use an SVG icon
                   title: "Terms and Conditions",
-                  onTap: () {
-                    Get.toNamed(AppRoutes.termsAndConditions);
-                  },
+                  onTap: () {},
                 ),
                 // Obx(() {
                 //   return SettingsListTile(
@@ -127,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                 // }),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
-                  icon: Icons.logout,
+                  iconPath: 'assets/icons/key.svg', // Use an SVG icon
                   title: "Logout",
                   onTap: () {},
                 ),

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:thrift2landlord/core/components/index.dart';
@@ -15,10 +18,12 @@ import '../../core/themes/app_sizes.dart';
 import '../listings/index.dart';
 
 part 'controllers/properties_controller.dart';
+part 'controllers/likes_controller.dart';
 part 'views/properties_screen.dart';
 part 'views/liked_properties.dart';
 part 'widgets/skeletons/properties_skeleton.dart';
 part 'properties_bindings.dart';
 part 'services/properties_service.dart';
+part 'services/likes_services.dart';
 part 'widgets/property.dart';
 part 'widgets/property_payment.dart';

@@ -5,19 +5,16 @@ TECH DEBT:
 2. Location list dropdown should feed of the database
 3. Transaction History is not fully tested but it is expected to use properties list with a logic to display all your transaction history
 4. Because of what we have above properties in the properties controller must be a stream and fetched in realtime
+5. Social login implements
+6. listings screen does not scroll all the way to the bottom
 
 
 
 
 TODO:
-1. Change all icons
-2. Complete user likes function on listing
 3. Complete all user profile related task:
-    -- reading and showing user image where needed
-    -- changing password
     -- forgot password
     -- sending feedbacks
-    -- showing terms and conditions
     -- logout
 
 

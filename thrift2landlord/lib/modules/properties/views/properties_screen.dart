@@ -26,29 +26,32 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
           ? AppColors.dark
           : AppColors.light,
       appBar: AppBar(
-        title: Text(
-          "Properties",
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.chat),
-            onPressed: () {
-              Get.toNamed(AppRoutes.chat);
-            },
+          title: Text(
+            "Properties",
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
-          IconButton(
-            icon: Icon(Icons.house_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.favorite_border),
-            onPressed: () {
-              Get.toNamed(AppRoutes.liked);
-            },
-          ),
-        ],
-      ),
+          actions: [
+            IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/chat.svg',
+                height: 24, // Adjust size as needed
+                color: AppColors.primary,
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.chat);
+              },
+            ),
+            IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/like.svg',
+                height: 24, // Adjust size as needed
+                color: AppColors.primary,
+              ),
+              onPressed: () {
+                Get.toNamed(AppRoutes.liked);
+              },
+            ),
+          ]),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator());

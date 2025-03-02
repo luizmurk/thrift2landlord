@@ -27,14 +27,21 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.file_open_outlined),
+            icon: SvgPicture.asset(
+              'assets/icons/document.svg',
+              height: 24, // Adjust size as needed
+              color: AppColors.primary,
+            ),
             onPressed: () {
-              // Get.toNamed(AppRoutes.kyc);
               Get.toNamed(AppRoutes.documents);
             },
           ),
           IconButton(
-            icon: Icon(Icons.notifications_outlined),
+            icon: SvgPicture.asset(
+              'assets/icons/notification.svg',
+              height: 24, // Adjust size as needed
+              color: AppColors.primary,
+            ),
             onPressed: () {
               Get.toNamed(AppRoutes.notifications);
             },

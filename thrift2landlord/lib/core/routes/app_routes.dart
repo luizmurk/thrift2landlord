@@ -11,6 +11,7 @@ class AppRoutes {
   static const String adminDashboard = '/admin-dashboard';
   static const String signIn = '/sign-in';
   static const String signUp = '/sign-up';
+  static const String changePassword = '/change-password';
   static const String forgotPassword = '/forgot-password';
   static const String emailVerify = '/email-verify';
   static const String home = '/home';

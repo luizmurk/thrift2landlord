@@ -41,6 +41,7 @@ flutter:
 
   assets:
     - assets/images/  # Ensure these paths are correct
+    - assets/icons/
 
   fonts:
     - family: Conthrax

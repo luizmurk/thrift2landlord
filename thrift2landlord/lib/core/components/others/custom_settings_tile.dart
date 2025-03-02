@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../themes/app_colors.dart';
 import '../../themes/app_sizes.dart';
 import '../../utils/custom_divider.dart';
 
 class SettingsListTile extends StatelessWidget {
-  final IconData icon;
+  final String iconPath; // Updated to use an SVG asset path
   final String title;
   final String? subtitle;
   final VoidCallback? onTap;
@@ -15,7 +16,7 @@ class SettingsListTile extends StatelessWidget {
 
   const SettingsListTile({
     super.key,
-    required this.icon,
+    required this.iconPath, // Expecting an SVG file path
     required this.title,
     this.subtitle,
     this.onTap,
@@ -31,7 +32,12 @@ class SettingsListTile extends StatelessWidget {
         ListTile(
           contentPadding:
               EdgeInsets.symmetric(horizontal: AppSizes.primaryPadding),
-          leading: Icon(icon, color: AppColors.primary, size: AppSizes.bigIcon),
+          leading: SvgPicture.asset(
+            iconPath,
+            height: AppSizes.bigIcon, // Use a standard size
+            width: AppSizes.bigIcon,
+            color: AppColors.primary,
+          ),
           title: Text(title, style: Theme.of(context).textTheme.titleLarge),
           subtitle: subtitle != null
               ? Text(subtitle!, style: Theme.of(context).textTheme.bodyMedium)
@@ -50,32 +56,3 @@ class SettingsListTile extends StatelessWidget {
     );
   }
 }
-
-//HOW TO USE
-
-// SettingsListTile(
-//   icon: Icons.account_circle,
-//   title: "Account Settings",
-//   subtitle: "Manage your account details",
-//   onTap: () {
-//     // Navigate to account settings
-//   },
-// ),
-
-// SettingsListTile(
-//   icon: Icons.notifications,
-//   title: "Notifications",
-//   hasSwitch: true,
-//   switchValue: true, // Dynamic from user settings
-//   onSwitchChanged: (value) {
-//     // Handle toggle
-//   },
-// ),
-
-// SettingsListTile(
-//   icon: Icons.lock,
-//   title: "Privacy & Security",
-//   onTap: () {
-//     // Navigate to privacy settings
-//   },
-// ),

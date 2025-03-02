@@ -8,9 +8,9 @@ class LikedProperties extends StatefulWidget {
 }
 
 class _LikedPropertiesState extends State<LikedProperties> {
-  final ListingsController controller =
+  final LikesController controller = Get.put(LikesController());
+  final ListingsController listingController =
       Get.put<ListingsController>(ListingsController());
-  final TextEditingController searchController = TextEditingController();
 
   String? selectedLocation;
   final List<String> locations = ["Gwagwalada", "Apo", "Lugbe"];
@@ -18,7 +18,6 @@ class _LikedPropertiesState extends State<LikedProperties> {
   @override
   void initState() {
     super.initState();
-    controller.searchListings(null, null);
   }
 
   @override
@@ -40,11 +39,9 @@ class _LikedPropertiesState extends State<LikedProperties> {
           children: [
             SizedBox(height: AppSizes.primaryGapHeight),
             Obx(() {
-              if (controller.isLoadingListingsFromSearch.value) {
+              if (controller.isLoading.value) {
                 return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
-              } else if (controller.hasErrorListingsFromSearch.value) {
-                return Text('Failed to load listing of the day');
-              } else if (controller.listingsFromSearch.isEmpty) {
+              } else if (controller.likedProperties.isEmpty) {
                 return Text('No listing of the day yet');
               }
               return SizedBox(
@@ -52,12 +49,12 @@ class _LikedPropertiesState extends State<LikedProperties> {
                 width: 1000.w,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: controller.listingsFromSearch.length,
+                  itemCount: controller.likedProperties.length,
                   itemBuilder: (context, index) {
-                    final listing = controller.listingsFromSearch[index];
+                    final listing = controller.likedProperties[index];
                     return GestureDetector(
                       onTap: () {
-                        controller.showListing(context, listing);
+                        listingController.showListing(context, listing);
                       },
                       child: ListingsCard(
                         listing: listing,

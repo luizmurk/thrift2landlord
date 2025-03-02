@@ -98,6 +98,10 @@ class AppPages {
       page: () => PaymentCheckoutScreen(),
     ),
     GetPage(
+      name: AppRoutes.changePassword,
+      page: () => ChangePasswordPage(),
+    ),
+    GetPage(
       name: AppRoutes.termsAndConditions,
       page: () => TermsAndConditionsPage(),
     ),

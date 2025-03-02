@@ -3,8 +3,10 @@ part of '../index.dart';
 class ListingsCard extends StatelessWidget {
   final ListingModel listing;
   final bool? isList;
+  final LikesController likesController =
+      Get.put(LikesController(), permanent: true);
 
-  const ListingsCard({
+  ListingsCard({
     required this.listing,
     this.isList = false,
     super.key,
@@ -28,6 +30,28 @@ class ListingsCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+        ),
+        Positioned(
+          top: 10,
+          right: 10,
+          child: Obx(() {
+            bool isLiked =
+                likesController.likedProperties.any((p) => p.id == listing.id);
+            return GestureDetector(
+              onTap: () => likesController.toggleLike(listing),
+              child: Container(
+                padding: EdgeInsets.all(AppSizes.p8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black.withOpacity(0.4),
+                ),
+                child: Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: isLiked ? Colors.red : Colors.white,
+                ),
+              ),
+            );
+          }),
         ),
         Positioned(
           bottom: 0,
@@ -96,6 +120,7 @@ class ListingsCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(width: AppSizes.p8),
                   ],
                 ),
               ),

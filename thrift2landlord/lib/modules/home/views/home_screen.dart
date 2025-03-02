@@ -138,10 +138,10 @@ class _HomeScreenState extends State<HomeScreen>
           showUnselectedLabels: true,
           elevation: 100.0,
           items: [
-            _buildNavItem(Icons.home, "Home", 0),
-            _buildNavItem(Icons.search, "Listings", 1),
-            _buildNavItem(Icons.circle, "Properties", 2),
-            _buildNavItem(Icons.payment, "Payments", 3),
+            _buildNavItem('assets/icons/home.svg', "Home", 0),
+            _buildNavItem('assets/icons/search.svg', "Listings", 1),
+            _buildNavItem('assets/icons/properties.svg', "Properties", 2),
+            _buildNavItem('assets/icons/payment.svg', "Payments", 3),
             BottomNavigationBarItem(
               icon: CustomAvatar(
                 imageUrl: controller.userModel.value?.photoUrl ??
@@ -157,13 +157,19 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   BottomNavigationBarItem _buildNavItem(
-      IconData icon, String label, int index) {
+      String assetPath, String label, int index) {
     return BottomNavigationBarItem(
       icon: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
         transitionBuilder: (child, animation) =>
             ScaleTransition(scale: animation, child: child),
-        child: Icon(icon, key: ValueKey<int>(_currentIndex == index ? 1 : 0)),
+        child: SvgPicture.asset(
+          assetPath,
+          key: ValueKey<int>(_currentIndex == index ? 1 : 0),
+          height: AppSizes.bigIcon,
+          color:
+              _currentIndex == index ? AppColors.primary : AppColors.offWhite,
+        ),
       ),
       label: label,
     );

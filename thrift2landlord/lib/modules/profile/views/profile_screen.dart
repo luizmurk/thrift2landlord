@@ -110,7 +110,9 @@ class ProfileScreen extends StatelessWidget {
                 SettingsListTile(
                   icon: Icons.help,
                   title: "Terms and Conditions",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.termsAndConditions);
+                  },
                 ),
                 // Obx(() {
                 //   return SettingsListTile(

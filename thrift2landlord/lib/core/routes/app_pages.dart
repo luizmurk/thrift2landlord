@@ -99,7 +99,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.termsAndConditions,
-      page: () => TermsAndConditionScreen(),
+      page: () => TermsAndConditionsPage(),
     ),
     GetPage(
       name: AppRoutes.profile,

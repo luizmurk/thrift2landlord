@@ -87,7 +87,7 @@ class TermsAndConditionsPage extends StatelessWidget {
           SizedBox(height: 4),
           Text(
             content,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       ),

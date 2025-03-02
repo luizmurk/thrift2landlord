@@ -11,6 +11,7 @@ import 'package:thrift2landlord/modules/auth/index.dart';
 import '../../core/components/others/custom_avatar.dart';
 import '../../core/components/others/custom_settings_tile.dart';
 import '../../core/models/data/user_model.dart';
+import '../../core/routes/app_routes.dart';
 import '../../core/services/app_services.dart';
 import '../../core/services/shared_services.dart';
 import '../../core/themes/app_colors.dart';

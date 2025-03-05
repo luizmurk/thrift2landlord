@@ -11,6 +11,7 @@ import '../../core/routes/app_routes.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../listings/index.dart';
+import '../notifications/index.dart';
 import '../properties/index.dart';
 
 part 'controllers/landing_controller.dart';

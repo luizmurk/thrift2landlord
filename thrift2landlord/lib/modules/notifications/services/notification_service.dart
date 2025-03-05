@@ -1,24 +1,22 @@
 part of '../index.dart';
 
-class NotificationService extends AppService {
-  bool isMock;
+class NotificationsService {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  NotificationService({this.isMock = false});
+  Stream<List<NotificationModel>> fetchNotifications(String? userId) {
+    return _db
+        .collection('notifications')
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => NotificationModel.fromFirestore(doc))
+            .toList());
+  }
 
-  Future<List<NotificationModel>> fetchNotifications(String id) async {
-    try {
-      if (isMock) {
-        // Fetch from mock data
-        return await MockDataService.fetchNotifications();
-      } else {
-        // Fetch from Firebase
-        final response = await firestore.collection('notifications').get();
-        return response.docs
-            .map((doc) => NotificationModel.fromJson(doc.data()))
-            .toList();
-      }
-    } catch (e) {
-      rethrow;
-    }
+  Future<void> markAsRead(String notificationId) async {
+    await _db
+        .collection('notifications')
+        .doc(notificationId)
+        .update({'isRead': true});
   }
 }

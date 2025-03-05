@@ -7,13 +7,13 @@ class MockDataService {
       NotificationModel(
         id: '1',
         title: 'Payment Received',
-        body: 'Your payment for land installment has been received.',
+        message: 'Your payment for land installment has been received.',
         timestamp: DateTime.now().subtract(Duration(hours: 2)),
       ),
       NotificationModel(
         id: '2',
         title: 'New Listing Available',
-        body: 'A new land listing has been added in your area.',
+        message: 'A new land listing has been added in your area.',
         timestamp: DateTime.now().subtract(Duration(days: 1)),
       ),
     ];

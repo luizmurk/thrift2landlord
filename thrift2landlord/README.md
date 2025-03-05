@@ -7,6 +7,7 @@ TECH DEBT:
 4. Because of what we have above properties in the properties controller must be a stream and fetched in realtime
 5. Social login implements
 6. listings screen does not scroll all the way to the bottom
+7. there is a late error for isRead on notifications.
 
 
 

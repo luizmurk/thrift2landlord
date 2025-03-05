@@ -9,6 +9,8 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   final ListingsController controller = Get.put(ListingsController());
+  final NotificationsController notificationController =
+      Get.put(NotificationsController());
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -33,14 +35,33 @@ class _LandingScreenState extends State<LandingScreen> {
               color: AppColors.primary,
             ),
             onPressed: () {
-              Get.toNamed(AppRoutes.documents);
+              // Get.toNamed(AppRoutes.documents);
+              notificationController.pushTestNotification();
             },
           ),
           IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/notification.svg',
-              height: 24, // Adjust size as needed
-              color: AppColors.primary,
+            icon: Stack(
+              children: [
+                Icon(Icons.notifications),
+                Positioned(
+                  right: 0,
+                  child: Obx(() {
+                    return notificationController.unreadCount.value > 0
+                        ? Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                color: Colors.red, shape: BoxShape.circle),
+                            child: Text(
+                              notificationController.unreadCount.value
+                                  .toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                          )
+                        : SizedBox();
+                  }),
+                ),
+              ],
             ),
             onPressed: () {
               Get.toNamed(AppRoutes.notifications);

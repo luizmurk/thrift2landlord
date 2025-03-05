@@ -35,14 +35,18 @@ class _LandingScreenState extends State<LandingScreen> {
               color: AppColors.primary,
             ),
             onPressed: () {
-              // Get.toNamed(AppRoutes.documents);
-              notificationController.pushTestNotification();
+              Get.toNamed(AppRoutes.documents);
+              // notificationController.pushTestNotification();
             },
           ),
           IconButton(
             icon: Stack(
               children: [
-                Icon(Icons.notifications),
+                SvgPicture.asset(
+                  'assets/icons/notification.svg',
+                  height: 24, // Adjust size as needed
+                  color: AppColors.primary,
+                ),
                 Positioned(
                   right: 0,
                   child: Obx(() {

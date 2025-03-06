@@ -5,6 +5,7 @@ class AppRoutes {
   static const String map = '/map';
   static const String kyc = '/kyc';
   static const String documents = '/documents';
+  static const String pendingPayment = '/pending-payment';
   static const String termsAndConditions = '/terms-and-condition';
   static const String notifications = '/notifications';
   static const String listing = '/listing';

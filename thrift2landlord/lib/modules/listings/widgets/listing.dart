@@ -12,6 +12,7 @@ class ListingDetailsScreen extends StatefulWidget {
 class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
   late ListingModel listing;
   String? selectedImage;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final PaymentCheckoutController controller =
       Get.put(PaymentCheckoutController());
   final LikesController likesController =
@@ -233,7 +234,8 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                 ),
                           ),
                           SizedBox(height: AppSizes.primaryGapHeight),
-                          listing.owner != null
+                          listing.owner != null &&
+                                  listing.owner == _auth.currentUser!.uid
                               ? Obx(
                                   () => CustomPrimaryButton(
                                     text: listing.isFullyPaid
@@ -246,13 +248,17 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                     isLoading: controller.isLoading.value,
                                   ),
                                 )
-                              : CustomPrimaryButton(
-                                  text: 'Buy Land Now',
-                                  onPressed: () {
-                                    Get.toNamed(AppRoutes.payment_checkout,
-                                        arguments: listing);
-                                  },
-                                ),
+                              : listing.owner != _auth.currentUser!.uid &&
+                                      !listing.isFullyPaid &&
+                                      listing.owner == null
+                                  ? CustomPrimaryButton(
+                                      text: 'Buy Land Now',
+                                      onPressed: () {
+                                        Get.toNamed(AppRoutes.payment_checkout,
+                                            arguments: listing);
+                                      },
+                                    )
+                                  : SizedBox(),
                           SizedBox(height: AppSizes.primaryGapHeight),
                           CustomSecondaryButton(
                             text: 'See Land on Map',

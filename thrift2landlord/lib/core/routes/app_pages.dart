@@ -84,6 +84,10 @@ class AppPages {
       page: () => LikedProperties(),
     ),
     GetPage(
+      name: AppRoutes.pendingPayment,
+      page: () => PaymentPendingPage(),
+    ),
+    GetPage(
       name: AppRoutes.properties,
       page: () => PropertiesScreen(),
       binding: PropertiesBinding(),

@@ -119,10 +119,7 @@ class PaymentCheckoutController extends GetxController {
         isLoading.value = false;
         throw Exception("Could not launch payment URL");
       }
-
-      // Step 3: Webhook in Firebase Functions handles payment confirmation
-
-      isLoading.value = false;
+      Get.offAllNamed("/pending-payment");
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");
@@ -199,8 +196,7 @@ class PaymentCheckoutController extends GetxController {
         throw Exception("Could not launch payment URL");
       }
 
-      // Step 3: Webhook in Firebase Functions handles payment confirmation
-      // No need to update Firestore here; webhook will update status on success/failure
+      Get.offAllNamed("/pending-payment");
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");
@@ -226,8 +222,8 @@ class PaymentCheckoutController extends GetxController {
           'paymentHistory': FieldValue.arrayRemove([
             {'paymentId': lastTransactionId}
           ]),
-          'buyerID': null,
-          'ownerID': null,
+          'buyerId': null,
+          'owner': null,
           'installmentPaymentPlan': null,
           'installmentMonths': null,
         });

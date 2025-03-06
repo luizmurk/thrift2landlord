@@ -12,10 +12,12 @@ import '../../core/components/inputs/custom_date_picker.dart';
 import '../../core/models/data/listings/installment_plan_model.dart';
 import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
+import '../../core/routes/app_routes.dart';
 import '../../core/themes/app_sizes.dart';
 
 part 'controllers/payment_checkout_controller.dart';
 part 'services/payment_checkout_service.dart';
 part 'views/payment_checkout_screen.dart';
+part 'views/payment_pending.dart';
 part 'widgets/bank_transfer.dart';
 part 'widgets/payment_option.dart';

@@ -8,6 +8,7 @@ TECH DEBT:
 5. Social login implements
 6. listings screen does not scroll all the way to the bottom
 7. there is a late error for isRead on notifications.
+9. we need a refresh pull down on properties and payments
 
 
 
@@ -20,5 +21,4 @@ TODO:
 
 
 
-6. Complete emailing and notifications : 1st/2nd March
-7. Complete payments : 4th - 7th March
+6. Complete emailing

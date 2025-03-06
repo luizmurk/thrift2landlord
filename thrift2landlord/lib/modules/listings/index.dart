@@ -21,6 +21,7 @@ import '../../core/services/shared_services.dart';
 import '../../core/themes/app_colors.dart';
 import '../../core/themes/app_sizes.dart';
 import '../../data/repositories/images.dart';
+import '../payment_checkout/index.dart';
 import '../properties/index.dart';
 
 part './controllers/listings_controller.dart';

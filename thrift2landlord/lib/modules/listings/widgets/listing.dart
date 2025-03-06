@@ -12,6 +12,10 @@ class ListingDetailsScreen extends StatefulWidget {
 class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
   late ListingModel listing;
   String? selectedImage;
+  final PaymentCheckoutController controller =
+      Get.put(PaymentCheckoutController());
+  final LikesController likesController =
+      Get.put(LikesController(), permanent: true);
 
   @override
   void initState() {
@@ -71,14 +75,26 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                           ),
                         ),
                         SizedBox(width: 10),
-                        CircleAvatar(
-                          backgroundColor: Colors.black.withOpacity(0.5),
-                          child: IconButton(
-                            icon: Icon(Icons.favorite_border,
-                                color: Colors.white),
-                            onPressed: () {},
-                          ),
-                        ),
+                        Obx(() {
+                          bool isLiked = likesController.likedProperties
+                              .any((p) => p.id == listing.id);
+                          return GestureDetector(
+                            onTap: () => likesController.toggleLike(listing),
+                            child: Container(
+                              padding: EdgeInsets.all(AppSizes.p8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                              child: Icon(
+                                isLiked
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: isLiked ? Colors.red : Colors.white,
+                              ),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ],
@@ -218,14 +234,17 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                           ),
                           SizedBox(height: AppSizes.primaryGapHeight),
                           listing.owner != null
-                              ? CustomPrimaryButton(
-                                  text: listing.isFullyPaid
-                                      ? 'PAID IN FULL'
-                                      : 'Continue Payment',
-                                  onPressed: () {
-                                    Get.toNamed(AppRoutes.payment_checkout,
-                                        arguments: listing);
-                                  },
+                              ? Obx(
+                                  () => CustomPrimaryButton(
+                                    text: listing.isFullyPaid
+                                        ? 'PAID IN FULL'
+                                        : 'Continue Payment',
+                                    onPressed: () {
+                                      controller.continueInstallmentPayment(
+                                          listing.id);
+                                    },
+                                    isLoading: controller.isLoading.value,
+                                  ),
                                 )
                               : CustomPrimaryButton(
                                   text: 'Buy Land Now',

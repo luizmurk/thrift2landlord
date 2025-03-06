@@ -35,10 +35,21 @@
             android:value="2" />
     </application>
 
+    <!-- Allow querying apps that can open URLs -->
     <queries>
+        <!-- Keep existing queries -->
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
+
+        <!-- Allow URL launching -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
+        </intent>
     </queries>
+
+    <!-- Allow querying installed packages (Android 11+) -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 </manifest>

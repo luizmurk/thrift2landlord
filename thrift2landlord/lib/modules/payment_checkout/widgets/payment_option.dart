@@ -2,11 +2,13 @@ part of '../index.dart';
 
 class _PaymentOptionsWidget extends StatefulWidget {
   final VoidCallback onFormValidated;
-  final String? amount;
+  final String listingId;
+  final double listingAmount;
 
   const _PaymentOptionsWidget({
     required this.onFormValidated,
-    required this.amount,
+    required this.listingId,
+    required this.listingAmount,
   });
 
   @override
@@ -15,22 +17,25 @@ class _PaymentOptionsWidget extends StatefulWidget {
 
 class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
   final _formKey = GlobalKey<FormState>();
-  String? selectedTimeFrame;
-  DateTime? selectedDate;
-  String? amount;
-  bool _isFormValid = false;
+  final PaymentCheckoutController controller =
+      Get.put(PaymentCheckoutController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    controller.updateListingDetails(widget.listingId, widget.listingAmount);
     return DefaultTabController(
-      // ✅ Wrap with DefaultTabController
       length: 2,
       child: Form(
         key: _formKey,
         onChanged: () {
           setState(() {
-            _isFormValid = _formKey.currentState?.validate() ?? false;
-            if (_isFormValid) {
+            bool isValid = _formKey.currentState?.validate() ?? false;
+            if (isValid) {
               widget.onFormValidated();
             }
           });
@@ -39,6 +44,9 @@ class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TabBar(
+              onTap: (index) {
+                controller.setIsInstallment(index == 0);
+              },
               tabs: [
                 Tab(text: "Pay in Installments"),
                 Tab(text: "One Time Payment"),
@@ -46,7 +54,7 @@ class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
             ),
             SizedBox(height: AppSizes.primaryGapHeight),
             SizedBox(
-              height: 300, // Ensure height is set to prevent layout errors
+              height: 300,
               child: TabBarView(
                 children: [
                   _buildInstallmentTab(),
@@ -67,41 +75,48 @@ class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
         children: [
           SizedBox(height: AppSizes.primaryGapHeight),
           _buildSectionTitle("Time Frame/Months"),
-          CustomDropdown(
-            value: selectedTimeFrame,
-            items: ["2", "4", "6", "8", "10"],
-            onChanged: (value) {
-              setState(() {
-                selectedTimeFrame = value.toString();
-              });
-            },
-            labelText: "Select Time Frame",
+          Obx(
+            () => CustomDropdown(
+              value: controller.installmentMonths.value > 0
+                  ? controller.installmentMonths.value.toString()
+                  : null,
+              items: ["2", "4", "6", "8", "10"],
+              onChanged: (value) {
+                if (value != null) {
+                  controller.updateInstallmentPlan(
+                    int.parse(value),
+                    controller.monthlyPaymentDate.value ?? DateTime.now(),
+                  );
+                }
+              },
+              labelText: "Select Time Frame",
+            ),
           ),
           SizedBox(height: AppSizes.primaryGapHeight),
           _buildSectionTitle("Monthly Payment Date"),
           SizedBox(height: AppSizes.primaryGapHeight),
           CustomDatePicker(
-            selectedDate: selectedDate ?? DateTime.now(),
+            selectedDate: DateTime.now(),
             onDateSelected: (date) {
-              setState(() {
-                selectedDate = date;
-              });
+              controller.updateInstallmentPlan(
+                controller.installmentMonths.value,
+                date,
+              );
             },
           ),
           SizedBox(height: AppSizes.primaryGapHeight),
-          _buildSectionTitle("Amount"),
-          CustomTextField(
-            controller: TextEditingController(text: amount),
-            hintText: "Enter amount",
-            validator: (value) =>
-                value!.isEmpty ? "Amount cannot be empty" : null,
-            onChanged: (value) {
-              setState(() {
-                amount = value;
-              });
-            },
+          _buildSectionTitle("Amount (Per Installment)"),
+          Obx(
+            () => CustomTextField(
+              controller: TextEditingController(
+                text: controller.installmentPaymentPlan.value?.amount
+                        .toStringAsFixed(2) ??
+                    "0.00",
+              ),
+              hintText: "Amount",
+              readOnly: true,
+            ),
           ),
-          SizedBox(height: AppSizes.primaryGapHeight),
         ],
       ),
     );
@@ -111,17 +126,15 @@ class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle("Amount"),
-        CustomTextField(
-          controller: TextEditingController(text: widget.amount.toString()),
-          hintText: "Enter amount",
-          validator: (value) =>
-              value!.isEmpty ? "Amount cannot be empty" : null,
-          onChanged: (value) {
-            setState(() {
-              amount = value;
-            });
-          },
+        _buildSectionTitle("Total Amount"),
+        Obx(
+          () => CustomTextField(
+            controller: TextEditingController(
+              text: controller.amount.value.toStringAsFixed(2),
+            ),
+            hintText: "Amount",
+            readOnly: true,
+          ),
         ),
       ],
     );

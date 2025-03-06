@@ -3,6 +3,7 @@ class PaymentModel {
   final double amount;
   final DateTime date;
   final String status;
+  final String? paymentMethod;
   final String completionStatus;
 
   PaymentModel({
@@ -11,6 +12,7 @@ class PaymentModel {
     required this.date,
     required this.status,
     required this.completionStatus,
+    this.paymentMethod,
   });
 
   factory PaymentModel.fromMap(Map<String, dynamic> map) {
@@ -20,6 +22,7 @@ class PaymentModel {
       date: DateTime.parse(map['date'] ?? DateTime.now().toIso8601String()),
       status: map['status'] ?? 'pending',
       completionStatus: map['completionStatus'] ?? '0%',
+      paymentMethod: map['paymentMethod'],
     );
   }
 
@@ -30,6 +33,7 @@ class PaymentModel {
       'date': date.toIso8601String(),
       'status': status,
       'completionStatus': completionStatus,
+      'paymentMethod': paymentMethod,
     };
   }
 }

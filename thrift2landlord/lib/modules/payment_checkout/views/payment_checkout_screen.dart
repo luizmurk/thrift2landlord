@@ -46,7 +46,8 @@ class _PaymentCheckoutScreenState extends State<PaymentCheckoutScreen> {
               _showBankTransferWidget
                   ? _BankTransferWidget()
                   : _PaymentOptionsWidget(
-                      amount: (listing.price).toString(),
+                      listingId: listing.id,
+                      listingAmount: (listing.price),
                       onFormValidated: () {
                         setState(() {
                           _showSecondaryButton = true;
@@ -69,12 +70,13 @@ class _PaymentCheckoutScreenState extends State<PaymentCheckoutScreen> {
                 ),
               SizedBox(height: AppSizes.primaryGapHeight),
               !_showBankTransferWidget
-                  ? CustomPrimaryButton(
-                      text: "Pay Using Paystack",
-                      onPressed: () {
-                        // Handle Paystack payment
-                      },
-                    )
+                  ? Obx(() => CustomPrimaryButton(
+                        text: "Pay Using Paystack",
+                        onPressed: () {
+                          _controller.processPayment();
+                        },
+                        isLoading: _controller.isLoading.value,
+                      ))
                   : SizedBox(),
             ],
           ),

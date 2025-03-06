@@ -17,7 +17,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   @override
   void initState() {
     super.initState();
-    // propertiesController.fetchProperties();
+    propertiesController.fetchProperties();
   }
 
   @override
@@ -138,7 +138,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                         'https://firebasestorage.googleapis.com/v0/b/na-wali-b7671.appspot.com/o/listings%2Flisting2.jpeg?alt=media&token=6e19178c-cfba-42fb-958a-73fc1b342576'),
                   ),
                   title: Text('Payment ID: ${payment.paymentId}',
-                      style: Theme.of(context).textTheme.headlineSmall),
+                      style: Theme.of(context).textTheme.labelMedium),
                   subtitle: Text('Status: ${payment.status}'),
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -164,7 +164,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           ),
                           SizedBox(width: 5),
                           Text('₦${payment.amount}',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),
                       Text('${payment.date.toLocal()}'.split(' ')[0],

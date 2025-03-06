@@ -1,6 +1,7 @@
 part of '../index.dart';
 
 class PropertiesController extends GetxController {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final PropertyService _service;
   final bool isMock;
 
@@ -10,22 +11,6 @@ class PropertiesController extends GetxController {
   var isLoading = true.obs;
   var hasError = false.obs;
   var properties = <ListingModel>[].obs;
-  var currentUser = Rxn<UserModel>();
-
-  @override
-  void onInit() {
-    checkLoggedInUser().then((onValue) {
-      fetchProperties();
-    });
-    super.onInit();
-  }
-
-  Future<void> checkLoggedInUser() async {
-    UserModel? storedUser = await SharedService.getUserFromStorage();
-    if (storedUser != null) {
-      currentUser.value = storedUser; // Navigate to Home Screen
-    }
-  }
 
   List<PaymentModel> getPayments() {
     List<PaymentModel> allPayments =
@@ -38,10 +23,11 @@ class PropertiesController extends GetxController {
   }
 
   void fetchProperties() async {
+    String? userId = _auth.currentUser?.uid;
     try {
       isLoading(true);
       hasError(false);
-      properties.value = await _service.fetchProperties(currentUser.value!.id);
+      properties.value = await _service.fetchProperties(userId);
     } catch (e) {
       hasError(true);
     } finally {

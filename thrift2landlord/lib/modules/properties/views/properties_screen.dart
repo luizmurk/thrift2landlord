@@ -15,7 +15,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
   @override
   void initState() {
     super.initState();
-    // controller.fetchProperties();
+    controller.fetchProperties();
   }
 
   // Add this

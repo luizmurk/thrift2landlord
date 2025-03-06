@@ -8,7 +8,7 @@ class PaymentPendingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Payment",
+          "Pending Payment",
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

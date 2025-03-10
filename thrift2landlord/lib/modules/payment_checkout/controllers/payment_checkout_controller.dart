@@ -91,6 +91,7 @@ class PaymentCheckoutController extends GetxController {
         amount: installmentPlan.amount,
         paymentMethod: paymentMethod.value,
         listingId: listingId,
+        isContinuedInstallment: true,
       );
 
       // Step 1: Pre-update listing details before payment
@@ -115,11 +116,11 @@ class PaymentCheckoutController extends GetxController {
       if (await canLaunch(checkoutUrl[0])) {
         await launch(checkoutUrl[0]);
         isLoading.value = false;
+        Get.offAllNamed("/pending-payment");
       } else {
         isLoading.value = false;
         throw Exception("Could not launch payment URL");
       }
-      Get.offAllNamed("/pending-payment");
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");
@@ -156,6 +157,7 @@ class PaymentCheckoutController extends GetxController {
             : amount.value,
         paymentMethod: paymentMethod.value,
         listingId: listingId.value,
+        isContinuedInstallment: false,
       );
 
       // Step 1: Pre-update listing details before payment
@@ -191,12 +193,11 @@ class PaymentCheckoutController extends GetxController {
       if (await canLaunch(checkoutUrl[0])) {
         await launch(checkoutUrl[0]);
         isLoading.value = false;
+        Get.offAllNamed("/pending-payment");
       } else {
         isLoading.value = false;
         throw Exception("Could not launch payment URL");
       }
-
-      Get.offAllNamed("/pending-payment");
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");

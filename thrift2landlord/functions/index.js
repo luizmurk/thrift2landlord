@@ -23,18 +23,10 @@ app.post("/paystack-webhook", async (req, res) => {
     try {
         const event = req.body;
 
-        if (event.event !== "charge.success") {
-            console.log("⚠️ Not a charge.success event");
-            return res.status(400).send("Not a successful charge event.");
-        }
-
+        // Extract important details
         const { reference, amount, metadata } = event.data;
-        const listingId = metadata?.listingId; // Using optional chaining for safety
-
-        console.log("✅ Charge successful");
-        console.log(`🔹 Reference: ${reference}`);
-        console.log(`🔹 Amount: ${amount}`);
-        console.log(`🔹 Listing ID: ${listingId}`);
+        const listingId = metadata?.listingId;
+        const isContinuedInstallment = metadata?.isContinuedInstallment || false; // Default to false
 
         if (!listingId || !reference) {
             console.log("🚨 Missing listingId or reference!");
@@ -50,10 +42,21 @@ app.post("/paystack-webhook", async (req, res) => {
             return res.status(404).send("Listing not found.");
         }
 
-        console.log("🟢 Listing found, updating payment history...");
-
         let listingData = listingDoc.data();
         let paymentHistory = listingData.paymentHistory || [];
+
+        // If it's not a successful payment, rollback and return
+        if (event.event !== "charge.success") {
+            console.log("⚠️ Not a charge.success event, rolling back...");
+
+            await rollbackFailedPayment(listingRef, paymentHistory, isContinuedInstallment);
+            return res.status(400).send("Not a successful charge event. Payment rolled back.");
+        }
+
+        console.log("✅ Charge successful");
+        console.log(`🔹 Reference: ${reference}`);
+        console.log(`🔹 Amount: ${amount}`);
+        console.log(`🔹 Listing ID: ${listingId}`);
 
         let paymentIndex = paymentHistory.findIndex(p => p.paymentId === reference);
 
@@ -69,28 +72,58 @@ app.post("/paystack-webhook", async (req, res) => {
 
         await listingRef.update({
             paymentHistory: paymentHistory,
-            totalPaidAmount: admin.firestore.FieldValue.increment(amount / 100),
+            totalPaidAmount: admin.firestore.FieldValue.increment(amount/100),
         });
 
-       // Fetch the updated listing to check totalPaidAmount
-        const updatedListingDoc = await listingRef.get();
-        const updatedListingData = updatedListingDoc.data();
-
-        if (updatedListingData.totalPaidAmount >= updatedListingData.price) {
-            console.log("🎉 Listing fully paid! Marking as complete...");
-
-            await listingRef.update({
-                isFullyPaid: true,
-            });
-        }
-
-        console.log("✅ Payment update process complete!");
+        console.log("✅ Payment updated successfully!");
         return res.status(200).send("Payment updated successfully.");
     } catch (error) {
         console.error("🚨 Error processing webhook:", error);
         return res.status(500).send("Internal Server Error.");
     }
 });
+
+/**
+ * Rollback failed payment for a listing.
+ */
+async function rollbackFailedPayment(listingRef, paymentHistory, isContinuedInstallment) {
+    try {
+        if (paymentHistory.length === 0) {
+            console.log("⚠️ No payments to roll back.");
+            return;
+        }
+
+        const lastTransactionId = paymentHistory[paymentHistory.length - 1].paymentId;
+
+        if (!lastTransactionId) {
+            console.log("⚠️ No valid last transaction found.");
+            return;
+        }
+
+        console.log(`🔄 Rolling back last payment: ${lastTransactionId}`);
+
+        let rollbackData = {
+            paymentHistory: paymentHistory.filter(p => p.paymentId !== lastTransactionId),
+        };
+
+        if (!isContinuedInstallment) {
+            // Reset additional fields for non-installment payments
+            rollbackData = {
+                ...rollbackData,
+                buyerId: null,
+                owner: null,
+                installmentPaymentPlan: null,
+                installmentMonths: null,
+            };
+        }
+
+        await listingRef.update(rollbackData);
+        console.log("✅ Rollback successful!");
+    } catch (error) {
+        console.error("🚨 Rollback Error:", error);
+    }
+}
+
 
 // Expose the API
 exports.api = functions.https.onRequest(app);

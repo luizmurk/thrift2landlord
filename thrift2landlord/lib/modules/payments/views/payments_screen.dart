@@ -29,12 +29,12 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              // Get.toNamed(AppRoutes.documents);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.add),
+          //   onPressed: () {
+          //     // Get.toNamed(AppRoutes.documents);
+          //   },
+          // ),
         ],
       ),
       body: SingleChildScrollView(
@@ -149,21 +149,22 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: payment.status == 'completed'
+                              color: payment.status == 'complete'
                                   ? Colors.green
-                                  : Colors.red,
+                                  : Colors.blueGrey,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
-                              payment.status == 'completed'
+                              payment.status == 'complete'
                                   ? Icons.check
-                                  : Icons.close,
+                                  : Icons.timer,
                               color: Colors.white,
                               size: 16,
                             ),
                           ),
                           SizedBox(width: 5),
-                          Text('₦${payment.amount}',
+                          Text(
+                              '₦${NumberFormat.compact().format(payment.amount)}',
                               style: Theme.of(context).textTheme.bodyLarge),
                         ],
                       ),

@@ -10,6 +10,7 @@ class PaymentService {
     required double amount,
     required String paymentMethod,
     required String listingId,
+    required bool isContinuedInstallment,
   }) async {
     try {
       String reference = "txn_${DateTime.now().millisecondsSinceEpoch}";
@@ -26,8 +27,9 @@ class PaymentService {
         "metadata": {
           "listingId": listingId, // Include listingId in metadata
           "paymentMethod": paymentMethod,
-          "userId": FirebaseAuth
-              .instance.currentUser?.uid, // Store user ID for tracking
+          "userId": FirebaseAuth.instance.currentUser?.uid,
+          "isContinuedInstallment":
+              isContinuedInstallment, // Store user ID for tracking
         }
       };
 

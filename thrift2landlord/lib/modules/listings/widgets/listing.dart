@@ -140,7 +140,7 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(top: 15.h),
+                  margin: EdgeInsets.only(top: 6.h),
                   width: double.infinity,
                   height: AppSizes.authImageHeight,
                   decoration: BoxDecoration(
@@ -181,11 +181,11 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                         Theme.of(context).textTheme.labelMedium,
                                   ),
                                   SizedBox(height: 8.h),
-                                  Text(
-                                    '500sqm',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
+                                  // Text(
+                                  //   '500sqm',
+                                  //   style:
+                                  //       Theme.of(context).textTheme.labelMedium,
+                                  // ),
                                 ],
                               ),
                               Column(
@@ -215,7 +215,7 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                                   ),
                                   SizedBox(height: AppSizes.secondaryGapHeight),
                                   Text(
-                                    '₦500k / ${listing.installmentMonths} months',
+                                    '₦${(listing.installmentPlan!.amount / 1000000).toStringAsFixed(2).replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (match) => ',')}M / ${listing.installmentMonths} months',
                                     style:
                                         Theme.of(context).textTheme.labelMedium,
                                   ),

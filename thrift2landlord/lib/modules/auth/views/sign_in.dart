@@ -36,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: AppSizes.authImageHeight,
+                  height: 450.h,
                   child: Image.asset(
                     'assets/images/sign_in.png',
                     fit: BoxFit.cover,
@@ -107,130 +107,130 @@ class _SignInScreenState extends State<SignInScreen> {
                             isLoading: _authController.isLoading.value,
                           )),
                       SizedBox(height: AppSizes.primaryGapHeight),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 1.5,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              "or sign in with",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(color: Colors.grey),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: AppSizes.primaryGapHeight),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Divider(
+                      //         color: Colors.grey,
+                      //         height: 1.5,
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding:
+                      //           const EdgeInsets.symmetric(horizontal: 8.0),
+                      //       child: Text(
+                      //         "or sign in with",
+                      //         style: Theme.of(context)
+                      //             .textTheme
+                      //             .bodySmall!
+                      //             .copyWith(color: Colors.grey),
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: Divider(
+                      //         color: Colors.grey,
+                      //         height: 1.5,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(height: AppSizes.primaryGapHeight),
 
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(AppSizes.secondaryPadding),
-                            child: Container(
-                              width: 50.w,
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.light,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 5),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(AppSizes.primaryPadding),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    'assets/images/facebook.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 20.w),
-                          GestureDetector(
-                            onTap: () => _authController.signInWithGoogle(),
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.all(AppSizes.secondaryPadding),
-                              child: Container(
-                                width: 50.w,
-                                height: 50.h,
-                                decoration: BoxDecoration(
-                                  color: AppColors.light,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 10,
-                                      offset: Offset(0, 5),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.all(AppSizes.primaryPadding),
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                      'assets/images/google.png',
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 20.w),
-                          Padding(
-                            padding: EdgeInsets.all(AppSizes.secondaryPadding),
-                            child: Container(
-                              width: 50.w,
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.light,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 5),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.all(AppSizes.primaryPadding),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    'assets/images/apple.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Padding(
+                      //       padding: EdgeInsets.all(AppSizes.secondaryPadding),
+                      //       child: Container(
+                      //         width: 50.w,
+                      //         height: 50.h,
+                      //         decoration: BoxDecoration(
+                      //           color: AppColors.light,
+                      //           shape: BoxShape.circle,
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: Colors.black26,
+                      //               blurRadius: 10,
+                      //               offset: Offset(0, 5),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         child: Padding(
+                      //           padding:
+                      //               EdgeInsets.all(AppSizes.primaryPadding),
+                      //           child: ClipOval(
+                      //             child: Image.asset(
+                      //               'assets/images/facebook.png',
+                      //               fit: BoxFit.cover,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 20.w),
+                      //     GestureDetector(
+                      //       onTap: () => _authController.signInWithGoogle(),
+                      //       child: Padding(
+                      //         padding:
+                      //             EdgeInsets.all(AppSizes.secondaryPadding),
+                      //         child: Container(
+                      //           width: 50.w,
+                      //           height: 50.h,
+                      //           decoration: BoxDecoration(
+                      //             color: AppColors.light,
+                      //             shape: BoxShape.circle,
+                      //             boxShadow: [
+                      //               BoxShadow(
+                      //                 color: Colors.black26,
+                      //                 blurRadius: 10,
+                      //                 offset: Offset(0, 5),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           child: Padding(
+                      //             padding:
+                      //                 EdgeInsets.all(AppSizes.primaryPadding),
+                      //             child: ClipOval(
+                      //               child: Image.asset(
+                      //                 'assets/images/google.png',
+                      //                 fit: BoxFit.cover,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 20.w),
+                      //     Padding(
+                      //       padding: EdgeInsets.all(AppSizes.secondaryPadding),
+                      //       child: Container(
+                      //         width: 50.w,
+                      //         height: 50.h,
+                      //         decoration: BoxDecoration(
+                      //           color: AppColors.light,
+                      //           shape: BoxShape.circle,
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: Colors.black26,
+                      //               blurRadius: 10,
+                      //               offset: Offset(0, 5),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         child: Padding(
+                      //           padding:
+                      //               EdgeInsets.all(AppSizes.primaryPadding),
+                      //           child: ClipOval(
+                      //             child: Image.asset(
+                      //               'assets/images/apple.png',
+                      //               fit: BoxFit.cover,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
 
                       SizedBox(height: AppSizes.primaryGapHeight),
 

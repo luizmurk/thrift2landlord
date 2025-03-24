@@ -95,6 +95,7 @@ class ListingsController extends GetxController {
       hasErrorListings(false);
       listings.value = await _service.fetchListings();
     } catch (e) {
+      var error = e;
       hasErrorListings(true);
     } finally {
       isLoadingListings(false);

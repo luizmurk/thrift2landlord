@@ -88,6 +88,10 @@ class AppPages {
       page: () => PaymentPendingPage(),
     ),
     GetPage(
+      name: AppRoutes.termsAndConditions,
+      page: () => TermsAndConditionsPage(),
+    ),
+    GetPage(
       name: AppRoutes.properties,
       page: () => PropertiesScreen(),
       binding: PropertiesBinding(),

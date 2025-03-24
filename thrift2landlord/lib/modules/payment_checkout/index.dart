@@ -14,8 +14,10 @@ import '../../core/models/data/listings/payment_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';
 import '../../core/routes/app_routes.dart';
 import '../../core/themes/app_sizes.dart';
+import 'package:monnify_payment_sdk/monnify_payment_sdk.dart';
 
 part 'controllers/payment_checkout_controller.dart';
+part 'services/monnify_payment_checkout_service.dart';
 part 'services/payment_checkout_service.dart';
 part 'views/payment_checkout_screen.dart';
 part 'views/payment_pending.dart';

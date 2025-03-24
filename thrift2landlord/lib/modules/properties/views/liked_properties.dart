@@ -45,7 +45,7 @@ class _LikedPropertiesState extends State<LikedProperties> {
                 return Text('No listing of the day yet');
               }
               return SizedBox(
-                height: 1000.h,
+                height: 700.h,
                 width: 1000.w,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,

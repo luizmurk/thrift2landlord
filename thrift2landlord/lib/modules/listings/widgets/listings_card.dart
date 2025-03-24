@@ -81,10 +81,14 @@ class ListingsCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          listing.title,
-                          style: TextStyle(
-                            color: Colors.white,
+                        Container(
+                          width: 150.w,
+                          child: Text(
+                            listing.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Text(

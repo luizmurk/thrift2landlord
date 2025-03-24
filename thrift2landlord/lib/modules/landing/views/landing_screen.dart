@@ -73,9 +73,13 @@ class _LandingScreenState extends State<LandingScreen> {
           ),
         ],
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.fetchListings();
+        },
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
             padding: EdgeInsets.all(AppSizes.primaryPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +156,9 @@ class _LandingScreenState extends State<LandingScreen> {
                   );
                 }),
               ],
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }

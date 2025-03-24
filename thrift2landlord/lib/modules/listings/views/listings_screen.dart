@@ -49,67 +49,72 @@ class _ListingsScreenState extends State<ListingsScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(AppSizes.primaryPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: AppSizes.primaryGapHeight),
-            CustomSearchBar(
-              controller: searchController,
-              hintText: "Search property tag...",
-              onSubmitted: (query) {
-                controller.searchListings(
-                  "tags",
-                  query,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.searchListings(null, null);
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(AppSizes.primaryPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: AppSizes.primaryGapHeight),
+              CustomSearchBar(
+                controller: searchController,
+                hintText: "Search property tag...",
+                onSubmitted: (query) {
+                  controller.searchListings(
+                    'city',
+                    query,
+                  );
+                }, // Show filter button
+              ),
+              // ElevatedButton(
+              //   onPressed: controller.isLoading.value
+              //       ? null
+              //       : () => controller.addMockListing(),
+              //   child: Obx(() => controller.isLoading.value
+              //       ? CircularProgressIndicator()
+              //       : Text('Add Mock Listing')),
+              // ),
+              SizedBox(height: AppSizes.primaryGapHeight),
+              Obx(() {
+                if (controller.isLoadingListingsFromSearch.value) {
+                  return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
+                } else if (controller.hasErrorListingsFromSearch.value) {
+                  return Text('Failed to load listing of the day');
+                } else if (controller.listingsFromSearch.isEmpty) {
+                  return Center(
+                      child: EmptyCMPState(
+                    title: '🚫 No Results Found',
+                    body:
+                        'Explore available lands and make your first purchase today.',
+                    buttonText: 'Find Properties Now',
+                  ));
+                }
+                return SizedBox(
+                  height: 550.h,
+                  width: 1000.w,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: controller.listingsFromSearch.length,
+                    itemBuilder: (context, index) {
+                      final listing = controller.listingsFromSearch[index];
+                      return GestureDetector(
+                        onTap: () {
+                          controller.showListing(context, listing);
+                        },
+                        child: ListingsCard(
+                          listing: listing,
+                          isList: true,
+                        ),
+                      );
+                    },
+                  ),
                 );
-              }, // Show filter button
-            ),
-            // ElevatedButton(
-            //   onPressed: controller.isLoading.value
-            //       ? null
-            //       : () => controller.addMockListing(),
-            //   child: Obx(() => controller.isLoading.value
-            //       ? CircularProgressIndicator()
-            //       : Text('Add Mock Listing')),
-            // ),
-            SizedBox(height: AppSizes.primaryGapHeight),
-            Obx(() {
-              if (controller.isLoadingListingsFromSearch.value) {
-                return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
-              } else if (controller.hasErrorListingsFromSearch.value) {
-                return Text('Failed to load listing of the day');
-              } else if (controller.listingsFromSearch.isEmpty) {
-                return Center(
-                    child: EmptyCMPState(
-                  title: '🚫 No Results Found',
-                  body:
-                      'Explore available lands and make your first purchase today.',
-                  buttonText: 'Find Properties Now',
-                ));
-              }
-              return SizedBox(
-                height: 1000.h,
-                width: 1000.w,
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: controller.listingsFromSearch.length,
-                  itemBuilder: (context, index) {
-                    final listing = controller.listingsFromSearch[index];
-                    return GestureDetector(
-                      onTap: () {
-                        controller.showListing(context, listing);
-                      },
-                      child: ListingsCard(
-                        listing: listing,
-                        isList: true,
-                      ),
-                    );
-                  },
-                ),
-              );
-            }),
-          ],
+              }),
+            ],
+          ),
         ),
       ),
     );

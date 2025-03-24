@@ -3,6 +3,7 @@ part of '../index.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
   final EditProfileController _controller = Get.put(EditProfileController());
+  final AuthController _authController = Get.put(AuthController());
   final ThemeController _themeController = Get.put(ThemeController());
 
   @override
@@ -104,17 +105,19 @@ class ProfileScreen extends StatelessWidget {
                     Get.toNamed(AppRoutes.changePassword);
                   },
                 ),
-                Divider(height: AppSizes.primaryGapHeight * 2),
-                SettingsListTile(
-                  iconPath: 'assets/icons/feedback.svg', // Use an SVG icon
-                  title: "Feedbacks",
-                  onTap: () {},
-                ),
+                // Divider(height: AppSizes.primaryGapHeight * 2),
+                // SettingsListTile(
+                //   iconPath: 'assets/icons/feedback.svg', // Use an SVG icon
+                //   title: "Feedbacks",
+                //   onTap: () {},
+                // ),
                 Divider(height: AppSizes.primaryGapHeight * 2),
                 SettingsListTile(
                   iconPath: 'assets/icons/shield.svg', // Use an SVG icon
                   title: "Terms and Conditions",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.termsAndConditions);
+                  },
                 ),
                 // Obx(() {
                 //   return SettingsListTile(
@@ -128,11 +131,17 @@ class ProfileScreen extends StatelessWidget {
                 //   );
                 // }),
                 Divider(height: AppSizes.primaryGapHeight * 2),
-                SettingsListTile(
-                  iconPath: 'assets/icons/key.svg', // Use an SVG icon
-                  title: "Logout",
-                  onTap: () {},
-                ),
+                Obx(() {
+                  return _authController.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : SettingsListTile(
+                          iconPath: 'assets/icons/key.svg', // Use an SVG icon
+                          title: "Logout",
+                          onTap: () {
+                            _authController.signOut();
+                          },
+                        );
+                }),
               ],
             ),
           ),

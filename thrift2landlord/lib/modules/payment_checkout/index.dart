@@ -21,5 +21,6 @@ part 'services/monnify_payment_checkout_service.dart';
 part 'services/payment_checkout_service.dart';
 part 'views/payment_checkout_screen.dart';
 part 'views/payment_pending.dart';
+part 'views/payment_failed.dart';
 part 'widgets/bank_transfer.dart';
 part 'widgets/payment_option.dart';

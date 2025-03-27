@@ -154,6 +154,7 @@ class _ListingDetailsScreenState extends State<ListingDetailsScreen> {
                     padding: EdgeInsets.all(AppSizes.primaryPadding),
                     child: SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: AppSizes.primaryGapHeight),
                           Row(

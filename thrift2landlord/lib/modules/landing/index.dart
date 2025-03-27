@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:thrift2landlord/core/components/index.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/models/data/listings/document_model.dart';
 import '../../core/models/data/listings/property_listings_model.dart';

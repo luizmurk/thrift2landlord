@@ -4,6 +4,7 @@ class PaymentCheckoutController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final PaymentService _paymentService = PaymentService();
+  final MonifyPaymentService _monnifyPaymentService = MonifyPaymentService();
 
   var isProcessingPayment = false.obs;
   var selectedPaymentMethod = ''.obs;
@@ -87,7 +88,7 @@ class PaymentCheckoutController extends GetxController {
       }
 
       // Step 2: Process payment through Paystack
-      List<String> checkoutUrl = await _paymentService.initiatePayment(
+      List<String> checkoutUrl = await _monnifyPaymentService.initiatePayment(
         amount: installmentPlan.amount,
         paymentMethod: paymentMethod.value,
         listingId: listingId,
@@ -100,7 +101,7 @@ class PaymentCheckoutController extends GetxController {
       Map<String, dynamic> updateData = {
         'paymentHistory': FieldValue.arrayUnion([
           PaymentModel(
-            paymentId: checkoutUrl[1],
+            paymentId: checkoutUrl[0],
             amount: installmentPlan.amount,
             date: DateTime.now(),
             status: 'pending',
@@ -112,20 +113,14 @@ class PaymentCheckoutController extends GetxController {
 
       await listingRef.update(updateData);
 
-      // Redirect user to Paystack checkout
-      if (await canLaunch(checkoutUrl[0])) {
-        await launch(checkoutUrl[0]);
-        isLoading.value = false;
-        Get.offAllNamed("/pending-payment");
-      } else {
-        isLoading.value = false;
-        throw Exception("Could not launch payment URL");
-      }
+      await handleMonnifyWebhook(
+          checkoutUrl[0], installmentPlan.amount, listingId, true);
+      isLoading.value = false;
+
+      Get.offAllNamed("/pending-payment");
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");
-      // Rollback in case of failure
-      await _rollbackFailedContinuedPayment(listingId);
     } finally {
       isProcessingPayment.value = false;
       isLoading.value = false;
@@ -151,7 +146,7 @@ class PaymentCheckoutController extends GetxController {
       }
 
       // Step 2: Process payment through Paystack
-      List<String> checkoutUrl = await _paymentService.initiatePayment(
+      List<String> checkoutUrl = await _monnifyPaymentService.initiatePayment(
         amount: isInstallment.value
             ? (installmentPaymentPlan.value?.amount ?? 0.0)
             : amount.value,
@@ -168,7 +163,7 @@ class PaymentCheckoutController extends GetxController {
         'owner': userId,
         'paymentHistory': FieldValue.arrayUnion([
           PaymentModel(
-            paymentId: checkoutUrl[1],
+            paymentId: checkoutUrl[0],
             amount: isInstallment.value
                 ? (installmentPaymentPlan.value?.amount ?? 0.0)
                 : amount.value,
@@ -188,70 +183,97 @@ class PaymentCheckoutController extends GetxController {
       }
 
       await listingRef.update(updateData);
-
-      // Redirect user to Paystack checkout
-      if (await canLaunch(checkoutUrl[0])) {
-        await launch(checkoutUrl[0]);
-        isLoading.value = false;
+      bool monnifyResponse = await handleMonnifyWebhook(
+          checkoutUrl[0],
+          isInstallment.value
+              ? (installmentPaymentPlan.value?.amount ?? 0.0)
+              : amount.value,
+          listingId.value,
+          false);
+      isLoading.value = false;
+      if (monnifyResponse) {
         Get.offAllNamed("/pending-payment");
       } else {
-        isLoading.value = false;
-        throw Exception("Could not launch payment URL");
+        Get.offAllNamed("/failed-payment");
       }
     } catch (e) {
       paymentError.value = e.toString();
       print("Payment Error: $e");
-      // Rollback in case of failure
-      await _rollbackFailedPayment(listingId.value);
+      Get.offAllNamed("/failed-payment");
     } finally {
       isProcessingPayment.value = false;
       isLoading.value = false;
     }
   }
 
-  Future<void> _rollbackFailedPayment(String listingId) async {
+  /// Handles the Monnify Webhook Callback
+  Future<bool> handleMonnifyWebhook(String reference, double amount,
+      String listingId, bool isContinuedInstallment) async {
     try {
-      DocumentReference listingRef =
-          _firestore.collection('listings').doc(listingId);
-      DocumentSnapshot listingSnap = await listingRef.get();
-      List<dynamic> paymentHistory = listingSnap.get('paymentHistory') ?? [];
-      String? lastTransactionId =
-          paymentHistory.isNotEmpty ? paymentHistory.last['paymentId'] : null;
+      print("🔵 Webhook received!");
 
-      if (lastTransactionId != null) {
+      if (listingId == null || reference == null) {
+        print("🚨 Missing listingId or reference!");
+        return false;
+      }
+
+      // Fetch listing from Firestore
+      DocumentReference listingRef =
+          _firestore.collection("listings").doc(listingId);
+      DocumentSnapshot listingDoc = await listingRef.get();
+
+      if (!listingDoc.exists) {
+        print("🚨 Listing not found in Firestore!");
+        return false;
+      }
+
+      Map<String, dynamic>? listingData =
+          listingDoc.data() as Map<String, dynamic>?;
+      List<dynamic> paymentHistory = listingData?['paymentHistory'] ?? [];
+
+      print("✅ Transaction successful");
+      print("🔹 Reference: $reference");
+      print("🔹 Amount: $amount");
+      print("🔹 Listing ID: $listingId");
+
+      int paymentIndex =
+          paymentHistory.indexWhere((p) => p['paymentId'] == reference);
+
+      if (paymentIndex == -1) {
+        print("🚨 Payment reference not found in history!");
+        return false;
+      }
+
+      // Update the payment entry
+      paymentHistory[paymentIndex]['status'] = "complete";
+      paymentHistory[paymentIndex]['completionStatus'] = "100%";
+      paymentHistory[paymentIndex]['date'] = DateTime.now().toIso8601String();
+
+      await listingRef.update({
+        'paymentHistory': paymentHistory,
+        'totalPaidAmount': FieldValue.increment(amount),
+      });
+
+      print("🔄 Fetching updated listing to check totalPaidAmount...");
+      DocumentSnapshot updatedListingDoc = await listingRef.get();
+      Map<String, dynamic>? updatedListingData =
+          updatedListingDoc.data() as Map<String, dynamic>?;
+
+      if (updatedListingData != null &&
+          (updatedListingData['totalPaidAmount'] ?? 0) >=
+              (updatedListingData['price'] ?? double.infinity)) {
+        print("🎉 Listing fully paid! Marking as complete...");
+
         await listingRef.update({
-          'paymentHistory': FieldValue.arrayRemove([
-            {'paymentId': lastTransactionId}
-          ]),
-          'buyerId': null,
-          'owner': null,
-          'installmentPaymentPlan': null,
-          'installmentMonths': null,
+          'isFullyPaid': true,
         });
       }
-    } catch (e) {
-      print("Rollback Error: $e");
-    }
-  }
 
-  Future<void> _rollbackFailedContinuedPayment(String listingId) async {
-    try {
-      DocumentReference listingRef =
-          _firestore.collection('listings').doc(listingId);
-      DocumentSnapshot listingSnap = await listingRef.get();
-      List<dynamic> paymentHistory = listingSnap.get('paymentHistory') ?? [];
-      String? lastTransactionId =
-          paymentHistory.isNotEmpty ? paymentHistory.last['paymentId'] : null;
-
-      if (lastTransactionId != null) {
-        await listingRef.update({
-          'paymentHistory': FieldValue.arrayRemove([
-            {'paymentId': lastTransactionId}
-          ]),
-        });
-      }
-    } catch (e) {
-      print("Rollback Error: $e");
+      print("✅ Payment update process complete!");
+      return true;
+    } catch (error) {
+      print("🚨 Error processing webhook: $error");
+      return false;
     }
   }
 }

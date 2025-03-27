@@ -111,6 +111,6 @@ class DocumentsPage extends StatelessWidget {
   void _downloadDocument(DocumentModel document) {
     // Implement the document download logic here
     // For example, you can use the url_launcher package to open the document URL
-    // launch(document.url);
+    launch(document.url);
   }
 }

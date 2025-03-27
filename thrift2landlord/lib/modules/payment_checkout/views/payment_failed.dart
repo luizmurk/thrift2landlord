@@ -1,14 +1,14 @@
 part of '../index.dart';
 
-class PaymentPendingPage extends StatelessWidget {
-  const PaymentPendingPage({Key? key}) : super(key: key);
+class PaymentFailedPage extends StatelessWidget {
+  const PaymentFailedPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Pending Payment",
+          "Failed Payment",
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
@@ -20,7 +20,7 @@ class PaymentPendingPage extends StatelessWidget {
             // const CircularProgressIndicator(),
             // const SizedBox(height: 20),
             const Text(
-              "Your payment is complete, you are close to being a landlord",
+              "Your payment has failed for some issue, Please Check you account and try again...",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),

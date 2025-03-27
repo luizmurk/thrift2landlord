@@ -61,7 +61,7 @@ class _PaymentCheckoutScreenState extends State<PaymentCheckoutScreen> {
                 CustomSecondaryButton(
                   text: !_showBankTransferWidget
                       ? "Pay Via Bank Transfer"
-                      : "Try PayStack",
+                      : "Try Card Payment",
                   onPressed: () {
                     setState(() {
                       _showBankTransferWidget = !_showBankTransferWidget;
@@ -71,7 +71,7 @@ class _PaymentCheckoutScreenState extends State<PaymentCheckoutScreen> {
               SizedBox(height: AppSizes.primaryGapHeight),
               !_showBankTransferWidget
                   ? Obx(() => CustomPrimaryButton(
-                        text: "Pay Using Paystack",
+                        text: "Proceed to Payment",
                         onPressed: () {
                           _controller.processPayment();
                         },

@@ -88,6 +88,10 @@ class AppPages {
       page: () => PaymentPendingPage(),
     ),
     GetPage(
+      name: AppRoutes.failedPayment,
+      page: () => PaymentFailedPage(),
+    ),
+    GetPage(
       name: AppRoutes.termsAndConditions,
       page: () => TermsAndConditionsPage(),
     ),

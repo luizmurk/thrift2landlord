@@ -95,14 +95,18 @@ class __PaymentOptionsWidgetState extends State<_PaymentOptionsWidget> {
           SizedBox(height: AppSizes.primaryGapHeight),
           _buildSectionTitle("Monthly Payment Date"),
           SizedBox(height: AppSizes.primaryGapHeight),
-          CustomDatePicker(
-            selectedDate: DateTime.now(),
-            onDateSelected: (date) {
-              controller.updateInstallmentPlan(
-                controller.installmentMonths.value,
-                date,
-              );
-            },
+          Obx(
+            () => CustomDatePicker(
+              selectedDate:
+                  controller.monthlyPaymentDate.value ?? DateTime.now(),
+              onDateSelected: (date) {
+                controller.updateInstallmentPlan(
+                  controller.installmentMonths.value,
+                  date,
+                );
+                controller.monthlyPaymentDate.value = date;
+              },
+            ),
           ),
           SizedBox(height: AppSizes.primaryGapHeight),
           _buildSectionTitle("Amount (Per Installment)"),

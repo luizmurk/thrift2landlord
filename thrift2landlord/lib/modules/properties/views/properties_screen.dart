@@ -27,7 +27,7 @@ class _PropertiesScreenState extends State<PropertiesScreen> {
           : AppColors.light,
       appBar: AppBar(
           title: Text(
-            "Properties",
+            "My Properties",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           actions: [

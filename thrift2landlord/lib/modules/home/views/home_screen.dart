@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
           items: [
             _buildNavItem('assets/icons/home.svg', "Home", 0),
             _buildNavItem('assets/icons/search.svg', "Listings", 1),
-            _buildNavItem('assets/icons/properties.svg', "Properties", 2),
+            _buildNavItem('assets/icons/properties.svg', "My Properties", 2),
             _buildNavItem('assets/icons/payment.svg', "Payments", 3),
             BottomNavigationBarItem(
               icon: CustomAvatar(

@@ -17,11 +17,11 @@ class MonifyPaymentService {
       // Ensure Monnify is initialized before calling checkout
       final monnify = await Monnify.initialize(
         applicationMode: ApplicationMode.TEST,
-        apiKey: "MK_TEST_Q6YXLJDRWK",
-        contractCode: "5816429673",
+        // apiKey: "MK_TEST_Q6YXLJDRWK",
+        // contractCode: "5816429673",
+        apiKey: "MK_TEST_Q6BGTJV64R",
+        contractCode: "7360842298",
       );
-      //  apiKey: "MK_TEST_Q6BGTJV64R",
-      //   contractCode: "6496718573",
 
       final transaction = TransactionDetails().copyWith(
           amount: amount,

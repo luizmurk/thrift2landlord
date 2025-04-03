@@ -93,25 +93,16 @@ class _LandingScreenState extends State<LandingScreen> {
                     return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
                   } else if (controller.hasErrorListings.value) {
                     return Text('Failed to load listing of the day');
-                  } else if (controller.listings.isEmpty) {
-                    return Center(
-                        child: EmptyCMPState(
-                      title: '🚫 No Properties Yet!',
-                      body:
-                          'Explore available lands and make your first purchase today.',
-                      buttonText: 'Find Properties Now',
-                      onButtonPressed: () {
-                        Get.toNamed(AppRoutes.listings);
-                      },
-                    ));
+                  } else if (controller.topSellingListings.isEmpty) {
+                    return Text('No Top Selling listings yet');
                   }
                   return SizedBox(
                     height: AppSizes.listingCardHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: controller.listings.length,
+                      itemCount: controller.topSellingListings.length,
                       itemBuilder: (context, index) {
-                        final listing = controller.listings[index];
+                        final listing = controller.topSellingListings[index];
                         return GestureDetector(
                           onTap: () {
                             controller.showListing(context, listing);
@@ -133,16 +124,16 @@ class _LandingScreenState extends State<LandingScreen> {
                     return ListingOfTheDaySkeletonLoader(); // Replace with skeleton loader
                   } else if (controller.hasErrorListings.value) {
                     return Text('Failed to load listing of the day');
-                  } else if (controller.listings.isEmpty) {
-                    return Text('No listing of the day yet');
+                  } else if (controller.promotionalListings.isEmpty) {
+                    return Text('No Promo listings yet');
                   }
                   return SizedBox(
                     height: AppSizes.listingCardHeight,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: controller.listings.length,
+                      itemCount: controller.promotionalListings.length,
                       itemBuilder: (context, index) {
-                        final listing = controller.listings[index];
+                        final listing = controller.promotionalListings[index];
                         return GestureDetector(
                           onTap: () {
                             controller.showListing(context, listing);

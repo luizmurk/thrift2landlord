@@ -5,6 +5,8 @@ class ListingsController extends GetxController {
   var categories = <CategoryModel>[].obs;
   var realtors = <UserModel>[].obs;
   var listings = <ListingModel>[].obs;
+  var promotionalListings = <ListingModel>[].obs;
+  var topSellingListings = <ListingModel>[].obs;
   var listingsFromSearch = <ListingModel>[].obs;
   var yourListings = <ListingModel>[].obs;
   var listing = Rxn<ListingModel>();
@@ -94,6 +96,11 @@ class ListingsController extends GetxController {
       isLoadingListings(true);
       hasErrorListings(false);
       listings.value = await _service.fetchListings();
+      promotionalListings.value =
+          listings.where((listing) => listing.tags.contains("Promo")).toList();
+      topSellingListings.value = listings
+          .where((listing) => listing.tags.contains("Top Selling"))
+          .toList();
     } catch (e) {
       var error = e;
       hasErrorListings(true);

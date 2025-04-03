@@ -13,7 +13,7 @@ class _ListingsScreenState extends State<ListingsScreen> {
   final TextEditingController searchController = TextEditingController();
 
   String? selectedLocation;
-  final List<String> locations = ["Gwagwalada", "Apo", "Lugbe", "Wuse 3"];
+  final List<String> locations = ["Gwagwalada", "Kuje"];
 
   @override
   void initState() {

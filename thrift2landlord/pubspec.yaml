@@ -2,7 +2,7 @@ name: thrift2landlord
 description: "A new Flutter project."
 publish_to: 'none' 
 
-version: 1.0.0+1
+version: 1.0.0+4
 
 environment:
   sdk: ^3.6.0
@@ -31,7 +31,8 @@ dependencies:
   dio: ^5.8.0+1
   shimmer: ^3.0.0
   google_sign_in: ^6.2.2
-  flutter_native_splash: ^2.4.4  # Correct placement
+  flutter_native_splash: ^2.4.4  
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +43,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/  # Ensure these paths are correct
+    - assets/images/  
     - assets/icons/
 
   fonts:
@@ -52,10 +53,17 @@ flutter:
 
 flutter_native_splash:
   color: "#ffffff"
-  color_dark: "#000000"
+  color_dark: "#ffffff"
   image: assets/images/logo_light.jpeg
-  image_dark: assets/images/logo_dark.jpeg
+  image_dark: assets/images/logo_light.jpeg
   android: true
   ios: true
   web: false
   fullscreen: true
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"  # Change this to your actual logo path
+  adaptive_icon_background: "#ffffff"  
+  adaptive_icon_foreground: "assets/images/logo.png"  

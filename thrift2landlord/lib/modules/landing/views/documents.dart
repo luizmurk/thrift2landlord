@@ -28,7 +28,7 @@ class DocumentsPage extends StatelessWidget {
             title: '📜 No Documents Yet!',
             body:
                 'You don’t have any property documents yet. Buy land first to receive your official digital property document after payment',
-            buttonText: 'Create Listing',
+            buttonText: 'Find Properties',
             onButtonPressed: () {
               Get.toNamed(AppRoutes.listings);
             },

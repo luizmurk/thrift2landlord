@@ -1,10 +1,15 @@
 part of '../index.dart';
 
-class PersonalInfoView extends StatelessWidget {
+class PersonalInfoView extends StatefulWidget {
   final KYCController controller;
 
   PersonalInfoView({required this.controller});
 
+  @override
+  State<PersonalInfoView> createState() => _PersonalInfoViewState();
+}
+
+class _PersonalInfoViewState extends State<PersonalInfoView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +33,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomTextField(
-            controller: controller.fullNameController,
+            controller: widget.controller.fullNameController,
             hintText: "Enter your full name",
             prefixIcon: Icon(Icons.person),
             validator: (value) =>
@@ -46,10 +51,14 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomDatePicker(
-            selectedDate: controller.dobController.text.isNotEmpty
-                ? DateTime.parse(controller.dobController.text)
+            selectedDate: widget.controller.dobController.text.isNotEmpty
+                ? DateTime.parse(widget.controller.dobController.text)
                 : DateTime.now(),
-            onDateSelected: (date) => controller.updateDOB(date),
+            onDateSelected: (date) {
+              setState(() {
+                widget.controller.updateDOB(date);
+              });
+            },
           ),
 
           SizedBox(height: AppSizes.primaryGapHeight),
@@ -63,10 +72,10 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           Obx(() => CustomDropdown(
-                value: controller.gender.value,
+                value: widget.controller.gender.value,
                 labelText: 'Select Gender',
                 items: ['Male', 'Female', 'Other'],
-                onChanged: (value) => controller.gender.value = value!,
+                onChanged: (value) => widget.controller.gender.value = value!,
               )),
 
           SizedBox(height: AppSizes.primaryGapHeight),
@@ -80,7 +89,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomTextField(
-            controller: controller.nationalityController,
+            controller: widget.controller.nationalityController,
             hintText: "Enter your nationality",
           ),
 
@@ -95,7 +104,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomTextField(
-            controller: controller.addressController,
+            controller: widget.controller.addressController,
             hintText: "Enter your address",
           ),
 
@@ -110,7 +119,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomTextField(
-            controller: controller.stateController,
+            controller: widget.controller.stateController,
             hintText: "Enter your state",
           ),
 
@@ -124,7 +133,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           CustomTextField(
-            controller: controller.lgaController,
+            controller: widget.controller.lgaController,
             hintText: "Enter your LGA",
           ),
 
@@ -139,7 +148,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           NumberTextField(
-            controller: controller.phoneController,
+            controller: widget.controller.phoneController,
             hintText: "Enter your phone number",
             validator: (value) =>
                 value!.length < 10 ? "Enter a valid phone number" : null,
@@ -156,7 +165,7 @@ class PersonalInfoView extends StatelessWidget {
           ),
           SizedBox(height: AppSizes.secondaryGapHeight),
           EmailTextField(
-            controller: controller.emailController,
+            controller: widget.controller.emailController,
             hintText: "Enter your email",
           ),
 
@@ -165,7 +174,7 @@ class PersonalInfoView extends StatelessWidget {
           SizedBox(
             child: CustomPrimaryButton(
               text: 'Next',
-              onPressed: controller.nextStep,
+              onPressed: widget.controller.nextStep,
             ),
           ),
         ],

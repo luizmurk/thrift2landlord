@@ -90,6 +90,7 @@ class KYCController extends GetxController {
   @override
   void onInit() {
     checkLoggedInUser();
+
     super.onInit();
   }
 

@@ -104,8 +104,10 @@ class Board {
 
   /// Print board in text form (for debugging)
   void printBoard() {
+    print('    a   b   c   d   e   f   g   h');
+    print('   ───────────────────────────────');
     for (int row = 0; row < 8; row++) {
-      String line = '$row |';
+      String line = '${8 - row} │';
       for (int col = 0; col < 8; col++) {
         final piece = getPiece(Position(row, col));
         if (piece == null) {
@@ -114,7 +116,10 @@ class Board {
           line += ' ${piece.symbol} ';
         }
       }
+      line += '│ ${8 - row}';
       print(line);
     }
+    print('   ───────────────────────────────');
+    print('    a   b   c   d   e   f   g   h');
   }
 }

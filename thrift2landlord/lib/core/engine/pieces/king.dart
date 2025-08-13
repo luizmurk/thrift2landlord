@@ -15,7 +15,6 @@ class King extends Piece {
   String get symbol => color == PieceColor.white ? 'K' : 'k';
 
   @override
-  @override
   List<Position> getLegalMoves(Position from, Board board) {
     List<Position> moves = [];
 
@@ -35,6 +34,7 @@ class King extends Piece {
       if (!target.isValid()) continue;
 
       final piece = board.getPiece(target);
+      // Only allow moves to empty squares or squares occupied by enemy pieces
       if (piece == null || piece.color != color) {
         moves.add(target);
       }

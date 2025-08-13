@@ -80,6 +80,7 @@ class ChessGame {
     }
 
     switchTurn();
+    // Check game status for the player whose turn it is now (the opponent)
     checkGameStatus();
     return true;
   }

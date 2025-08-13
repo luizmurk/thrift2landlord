@@ -23,23 +23,24 @@ class Pawn extends Piece {
 
     // One square forward
     final oneAhead = Position(from.row + direction, from.col);
-    if (board.getPiece(oneAhead) == null) {
+    if (oneAhead.isValid() && board.getPiece(oneAhead) == null) {
       moves.add(oneAhead);
 
       // Two squares forward (from starting position)
       final twoAhead = Position(from.row + 2 * direction, from.col);
-      if (!hasMoved && board.getPiece(twoAhead) == null) {
+      if (!hasMoved && twoAhead.isValid() && board.getPiece(twoAhead) == null) {
         moves.add(twoAhead);
       }
     }
 
-    // Captures
+    // Captures (diagonal only)
     for (var dCol in [-1, 1]) {
       final capturePos = Position(from.row + direction, from.col + dCol);
-      final target = board.getPiece(capturePos);
-
-      if (target != null && target.color != color) {
-        moves.add(capturePos);
+      if (capturePos.isValid()) {
+        final target = board.getPiece(capturePos);
+        if (target != null && target.color != color) {
+          moves.add(capturePos);
+        }
       }
     }
 
@@ -52,7 +53,9 @@ class Pawn extends Piece {
         for (var dCol in [-1, 1]) {
           if (from.col + dCol == lastMove.col) {
             final capturePos = Position(from.row + direction, from.col + dCol);
-            moves.add(capturePos);
+            if (capturePos.isValid()) {
+              moves.add(capturePos);
+            }
           }
         }
       }
